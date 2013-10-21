@@ -1,1 +1,1 @@
-<canvas id="game"></canvas>
+<canvas id="game" width="1000" height="740"></canvas>

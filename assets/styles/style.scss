@@ -10,8 +10,9 @@ body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:bef
 q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}textarea:focus, input:focus{outline: 0;}
 
 canvas {
-  width: 980px;
-  height: 720px;
+  width: 1000px;
+  display: block;
+  height: 740px;
   border: 1px solid #000;
   margin: 50px auto 0 auto;
 }
