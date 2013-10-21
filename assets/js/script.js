@@ -9,16 +9,26 @@
     (function (ut) {
 
         //-- Object to store "global" var --//
-        var gb, Cases;
+        var gb, Cases, Client;
 
         gb = {
             //jQuery elem
             $canvas: '',
 
+            //Game
+            gridX: 7,
+            gridY: 7,
+            square: 100,
+            marginTop: 20,
+            marginLeft: 20,
+
             //canvas var
             context: '',
-            cases: []
+            cases: [],
+            client: {}
         };
+
+        //-- Object to store game entities --//
         Cases = function (no, x, y, sol, skin) {
             this.no = no;
             this.x = x;
