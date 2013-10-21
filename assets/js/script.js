@@ -66,23 +66,31 @@
             },
 
             drawMap: function () {
-                var i = 42, row = 0, col = 0, oneCase;
+                var i = (gb.gridX * gb.gridY), row = 0,
+                    col = 0, posX, posY, oneCase, color;
 
                 for (i; i > 0; i--) {
-                    gb.context.fillStyle = '#' + Math.floor(Math.random() * 16777215).toString(16);
-                    gb.context.fillRect(20 + (100 * col), 20 + (100 * row), 100, 100);
+                    posX = gb.marginLeft + (gb.square * col);
+                    posY = gb.marginTop + (gb.square * row);
 
+                    //random color
+                    color  = '#' + Math.floor(Math.random() * 16777215).toString(16);
+
+                    gb.context.fillStyle = color;
+                    gb.context.fillRect(posX, posY, gb.square, gb.square);
+
+                    //set case object
                     oneCase = new Cases();
-                    oneCase.no = 43 - i;
-                    oneCase.x = 20 + (100 * col);
-                    oneCase.y = 20 + (100 * row);
-                    oneCase.sol = 'sol';
+                    oneCase.no = (gb.gridX * (gb.gridY - 1)) - i;
+                    oneCase.x = posX;
+                    oneCase.y = posY;
+                    oneCase.sol = color;
                     oneCase.skin = 'skin';
 
-                    gb.cases[43 - i] = oneCase;
+                    gb.cases[(gb.gridX * gb.gridY) - i] = oneCase;
 
                     col++;
-                    if (col > 5) {
+                    if (col > (gb.gridX - 1)) {
                         col = 0;
                         row++;
                     }
