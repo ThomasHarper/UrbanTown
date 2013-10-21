@@ -1,0 +1,4 @@
+.idea
+*.css
+/templates_c
+.DS_Store
