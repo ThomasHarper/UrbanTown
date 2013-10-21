@@ -53,7 +53,7 @@
                     oneCase.no = 43 - i;
                     oneCase.x = 20 + (100 * col);
                     oneCase.y = 20 + (100 * row);
-                    oneCase.sol = 'skin';
+                    oneCase.sol = 'sol';
                     oneCase.skin = 'skin';
 
                     gb.cases[43 - i] = oneCase;
