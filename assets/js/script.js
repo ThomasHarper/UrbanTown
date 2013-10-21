@@ -9,7 +9,7 @@
     (function (ut) {
 
         //-- Object to store "global" var --//
-        var gb;
+        var gb, Cases;
 
         gb = {
             //jQuery elem
@@ -19,6 +19,14 @@
             context: '',
             cases: []
         };
+        Cases = function (no, x, y, sol, skin) {
+            this.no = no;
+            this.x = x;
+            this.y = y;
+            this.sol = sol;
+            this.skin = skin;
+        };
+
         //-- Game loop function --//
         ut.game = {
 
@@ -40,6 +48,15 @@
                 for (i; i > 0; i--) {
                     gb.context.fillStyle = '#' + Math.floor(Math.random() * 16777215).toString(16);
                     gb.context.fillRect(20 + (100 * col), 20 + (100 * row), 100, 100);
+
+                    oneCase = new Cases();
+                    oneCase.no = 43 - i;
+                    oneCase.x = 20 + (100 * col);
+                    oneCase.y = 20 + (100 * row);
+                    oneCase.sol = 'skin';
+                    oneCase.skin = 'skin';
+
+                    gb.cases[43 - i] = oneCase;
 
                     col++;
                     if (col > 5) {
