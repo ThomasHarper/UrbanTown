@@ -36,6 +36,10 @@
             this.sol = sol;
             this.skin = skin;
         };
+        Client = function (x, y) {
+            this.x = x;
+            this.y = y;
+        };
 
         //-- Game loop function --//
         ut.game = {
@@ -50,6 +54,15 @@
 
                 //draw map
                 ut.game.drawMap();
+
+                //Mouse event
+                gb.$canvas.mousemove(ut.game.hover);
+                gb.$canvas.click(ut.game.click);
+
+                //Loop
+                ut.game.loop();
+
+                console.log(gb.cases);
             },
 
             drawMap: function () {
