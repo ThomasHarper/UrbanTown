@@ -95,6 +95,44 @@
                         row++;
                     }
                 }
+            },
+
+            //Core function
+            loop: function () {
+                var col, row, i;
+
+                //ReDraw grid
+                for (i = gb.gridX * gb.gridY; i > 0; i--) {
+                    gb.context.fillStyle = gb.cases[i - 1].sol;
+                    gb.context.fillRect(gb.cases[i - 1].x, gb.cases[i - 1].y, gb.square, gb.square);
+                }
+
+                //if cursor is in map
+                if ((gb.client.x > gb.marginLeft && gb.client.x < (gb.square * gb.gridX + gb.marginLeft))
+                    && (gb.client.y > gb.marginTop && gb.client.y < (gb.square * gb.gridY + gb.marginTop))) {
+                    col = Math.ceil((gb.client.x - gb.marginLeft) / gb.square);
+                    row = Math.ceil((gb.client.y - gb.marginTop) / gb.square);
+
+                    //rgba onHover
+                    gb.context.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                    gb.context.fillRect(gb.cases[(col + (row - 1)  * 7) - 1].x, gb.cases[(col + (row - 1)  * 7) - 1].y, gb.square, gb.square);
+                }
+
+                requestAnimationFrame(ut.game.loop);
+            },
+
+            hover: function (e) {
+                var client = new Client(),
+                    rect = gb.$canvas[0].getBoundingClientRect();
+
+                client.x = e.pageX - rect.left;
+                client.y = e.pageY - rect.top;
+
+                gb.client = client;
+            },
+
+            click: function () {
+                //user click handle
             }
         };
 
