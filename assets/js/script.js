@@ -10,9 +10,9 @@
         //-- Object to store "global" var --//
         ut.global = {
             //jQuery elem
-            $canvas: '',
+            $canvas: ''
         };
-		
+
         //-- Game loop function --//
         ut.game = {
 
