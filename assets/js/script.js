@@ -24,6 +24,7 @@
 
             //canvas var
             context: '',
+            bounding: {},
             cases: [],
             client: {}
         };
@@ -51,6 +52,9 @@
 
                 //Canvas basic
                 gb.context = gb.$canvas[0].getContext('2d');
+
+                //Store canvas bounding
+                gb.bounding = gb.$canvas[0].getBoundingClientRect();
 
                 //draw map
                 ut.game.drawMap();
@@ -108,25 +112,22 @@
                 }
 
                 //if cursor is in map
-                if ((gb.client.x > gb.marginLeft && gb.client.x < (gb.square * gb.gridX + gb.marginLeft))
-                    && (gb.client.y > gb.marginTop && gb.client.y < (gb.square * gb.gridY + gb.marginTop))) {
-                    col = Math.ceil((gb.client.x - gb.marginLeft) / gb.square);
-                    row = Math.ceil((gb.client.y - gb.marginTop) / gb.square);
-
+                client = ut.game.inCanvas(gb.client.x, gb.client.y);
+                if (client) {
+                    /* actual square = gb.cases[(col + (row - 1)  * 7) - 1] */
                     //rgba onHover
                     gb.context.fillStyle = 'rgba(255, 255, 255, 0.5)';
-                    gb.context.fillRect(gb.cases[(col + (row - 1)  * 7) - 1].x, gb.cases[(col + (row - 1)  * 7) - 1].y, gb.square, gb.square);
+                    gb.context.fillRect(gb.cases[client.square].x, gb.cases[client.square].y, gb.square, gb.square);
                 }
 
                 requestAnimationFrame(ut.game.loop);
             },
 
-            hover: function (e) {
-                var client = new Client(),
-                    rect = gb.$canvas[0].getBoundingClientRect();
+            hover: function (evt) {
+                var client = new Client();
 
-                client.x = e.pageX - rect.left;
-                client.y = e.pageY - rect.top;
+                client.x = evt.pageX - gb.bounding.left;
+                client.y = evt.pageY - gb.bounding.top;
 
                 gb.client = client;
             },
