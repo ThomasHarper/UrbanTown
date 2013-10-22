@@ -103,7 +103,7 @@
 
             //Core function
             loop: function () {
-                var col, row, i;
+                var col, row, i, client;
 
                 //ReDraw grid
                 for (i = gb.gridX * gb.gridY; i > 0; i--) {
@@ -132,8 +132,36 @@
                 gb.client = client;
             },
 
-            click: function () {
-                //user click handle
+            click: function (evt) {
+                var posX, posY, col, row, squareNo;
+
+                posX = evt.pageX - gb.bounding.left;
+                posY = evt.pageY - gb.bounding.top;
+
+                col = Math.ceil((gb.client.x - gb.marginLeft) / gb.square);
+                row = Math.ceil((gb.client.y - gb.marginTop) / gb.square);
+
+                squareNo = (col + (row - 1)  * 7) - 1;
+
+                //Do click action
+            },
+
+            inCanvas: function (x, y) {
+                var col, row, square, toReturn;
+
+                toReturn = false;
+
+                if ((gb.client.x > gb.marginLeft && gb.client.x < (gb.square * gb.gridX + gb.marginLeft))
+                    && (gb.client.y > gb.marginTop && gb.client.y < (gb.square * gb.gridY + gb.marginTop))) {
+
+                    col = Math.ceil((gb.client.x - gb.marginLeft) / gb.square);
+                    row = Math.ceil((gb.client.y - gb.marginTop) / gb.square);
+                    square = col + (row - 1)  * 7 - 1;
+
+                    toReturn = {col: col, row: row, square: square};
+                }
+
+                return toReturn;
             }
         };
 
