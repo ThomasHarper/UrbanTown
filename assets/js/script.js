@@ -90,6 +90,7 @@
             launch: function () {
                 //draw map
                 ut.game.drawMap();
+                gb.$canvas.show();
                 //Loop
                 ut.game.loop();
             },
