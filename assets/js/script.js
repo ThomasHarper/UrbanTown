@@ -29,6 +29,7 @@
             bounding: {},
             cases: [],
             client: {},
+            item: {},
 
             // Sprites
             images : [
@@ -90,8 +91,11 @@
             launch: function () {
                 //draw map
                 ut.game.drawMap();
+
+                ut.game.proposedObject();
                 //Loop
                 ut.game.loop();
+
             },
 
             drawMap: function () {
@@ -147,38 +151,33 @@
                     //@TODO: real hover
                     /* actual square = gb.cases[(col + (row - 1)  * 7) - 1] */
                     //rgba onHover
-                    gb.context.fillStyle = 'rgba(255, 255, 255, 0.5)';
-                    gb.context.fillRect(gb.cases[client.square].x, gb.cases[client.square].y, gb.square, gb.square);
+                    // gb.context.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                    // gb.context.fillRect(gb.cases[client.square].x, gb.cases[client.square].y, gb.square, gb.square);
+
+                    console.log(gb.item)
                 }
 
                 requestAnimationFrame(ut.game.loop);
             },
 
             proposedObject: function () {
-                var proposed, random, toReturn;
-                proposed = gb.props.slice(0, 3);
-
+                var proposed, random, item;
+                proposed = gb.props.slice(0, 3);                
                 random = Math.random();
-                switch (random) {
-
-                case random < 0.8:
-                    toReturn = proposed[0];
-                    break;
-
-                case random > 0.8 && random < 0.95:
-                    toReturn = proposed[1];
-                    break;
-
-                case random > 0.95 && random <= 1:
-                    toReturn = proposed[2];
-                    break;
-
-                default:
-                    toReturn = proposed[0];
-                    break;
+                if(random < 0.8)
+                {
+                    item = proposed[0];
                 }
-
-                return toReturn;
+                else if(random > 0.8 && random < 0.95)
+                {
+                    item = proposed[1];
+                }
+                else if(random > 0.95 && random <= 1)
+                {
+                    item = proposed[2];
+                }          
+                gb.item = item;
+                console.log(gb.item);  
             },
 
             hover: function (event) {
