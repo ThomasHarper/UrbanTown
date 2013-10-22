@@ -22,6 +22,7 @@
             marginTop: 20,
             marginLeft: 20,
             imgPath: './assets/images/',
+            load: 0,
 
             //canvas var
             context: '',
@@ -34,9 +35,7 @@
                 'sprite-dev.png'
             ],
             sprites: [
-                {images: 0, x: 0, y: 0, h: 100, w: 100},
-                {images: 0, x: 100, y: 0, h: 100, w: 100},
-                {images: 0, x: 200, y: 0, h: 100, w: 100}
+                {images: 0, sx: 0, sy: 0, sw: 100, sh: 100}
             ],
 
             props: [
@@ -45,7 +44,7 @@
                 {name: "Small house", score: 0, numSprite: 0, probability: 0.05},
                 {name: "House", score: 0, numSprite: 0, probability: 0},
                 {name: "Villa", score: 0, numSprite: 0, probability: 0},
-                {name: "Palace", score: 0, numSprite: 0, probability: 0.},
+                {name: "Palace", score: 0, numSprite: 0, probability: 0},
                 {name: "Apartment", score: 0, numSprite: 0, probability: 0},
                 {name: "Building", score: 0, numSprite: 0, probability: 0},
                 {name: "Golden building", score: 0, numSprite: 0, probability: 0}
@@ -82,41 +81,40 @@
                 //Store canvas bounding
                 gb.bounding = gb.$canvas[0].getBoundingClientRect();
 
-                //draw map
-                ut.game.drawMap();
-
-                //Mouse event
+                //jQuery events
                 gb.$canvas.mousemove(ut.game.hover);
                 gb.$canvas.click(ut.game.click);
+                $(document).on('image-loaded', ut.game.preload);
+            },
 
+            launch: function () {
+                //draw map
+                ut.game.drawMap();
                 //Loop
                 ut.game.loop();
-
-                console.log(gb.cases);
             },
 
             drawMap: function () {
                 var i = (gb.gridX * gb.gridY), row = 0,
-                    col = 0, posX, posY, oneCase, color;
+                    col = 0, posX, posY, oneCase, color, sprite;
 
                 for (i; i > 0; i--) {
                     posX = gb.marginLeft + (gb.square * col);
                     posY = gb.marginTop + (gb.square * row);
 
-                    //@TODO: real grid skin
-                    //random color
-                    color  = '#' + Math.floor(Math.random() * 16777215).toString(16);
+                    //set texture
+                    sprite = gb.sprites[0];
 
-                    gb.context.fillStyle = color;
-                    gb.context.fillRect(posX, posY, gb.square, gb.square);
+                    gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                        sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
 
                     //set case object
                     oneCase = new Cases();
                     oneCase.no = (gb.gridX * gb.gridY) - i;
                     oneCase.x = posX;
                     oneCase.y = posY;
-                    oneCase.sol = color;
-                    oneCase.texture = 'skin';
+                    oneCase.sol = sprite;
+                    oneCase.texture = '';
 
                     gb.cases[(gb.gridX * gb.gridY) - i] = oneCase;
 
@@ -130,13 +128,17 @@
 
             //Core function
             loop: function () {
-                var col, row, i, client;
+                var i, oneCase, client, sprite;
 
                 //ReDraw grid
                 for (i = gb.gridX * gb.gridY; i > 0; i--) {
-                    //@TODO: Real grid draw
-                    gb.context.fillStyle = gb.cases[i - 1].sol;
-                    gb.context.fillRect(gb.cases[i - 1].x, gb.cases[i - 1].y, gb.square, gb.square);
+
+                    oneCase = gb.cases[i - 1];
+                    sprite = gb.cases[i - 1].sol;
+
+                    gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                        sprite.sw, sprite.sh, oneCase.x, oneCase.y, gb.square, gb.square);
+
                 }
 
                 //if cursor is in map
@@ -150,6 +152,33 @@
                 }
 
                 requestAnimationFrame(ut.game.loop);
+            },
+
+            proposedObject: function () {
+                var proposed, random, toReturn;
+                proposed = gb.props.slice(0, 3);
+
+                random = Math.random();
+                switch (random) {
+
+                case random < 0.8:
+                    toReturn = proposed[0];
+                    break;
+
+                case random > 0.8 && random < 0.95:
+                    toReturn = proposed[1];
+                    break;
+
+                case random > 0.95 && random <= 1:
+                    toReturn = proposed[2];
+                    break;
+
+                default:
+                    toReturn = proposed[0];
+                    break;
+                }
+
+                return toReturn;
             },
 
             hover: function (event) {
@@ -182,7 +211,7 @@
                 gb.$canvas.css('cursor', 'default');
 
                 if ((x > gb.marginLeft && x < (gb.square * gb.gridX + gb.marginLeft))
-                    && (y > gb.marginTop && y < (gb.square * gb.gridY + gb.marginTop))) {
+                        && (y > gb.marginTop && y < (gb.square * gb.gridY + gb.marginTop))) {
 
                     col = Math.ceil((x - gb.marginLeft) / gb.square);
                     row = Math.ceil((y - gb.marginTop) / gb.square);
@@ -204,28 +233,21 @@
                     img = new Image();
                     img.src = gb.imgPath + gb.images[length - 1];
                     gb.images[length - 1] = img;
+                    img.onload = function () {
+                        $(document).trigger('image-loaded');
+                    };
                 }
             },
 
-            proposedObject: function () {
-                var proposed,random;
-                proposed = gb.props.slice(0,3);
-                
-                random = Math.random();                
-                switch (random) {
-                    case random < 0.8:
-                        return proposed[0];
-                    break;
-                    case random > 0.8 && random < 0.95:
-                        return proposed[1];
-                    break;
-                    case random > 0.95 && random <= 1:
-                        return proposed[2];
-                    break;
-                    default:
-                        return proposed[0];
-                    break;
-                }                
+            preload: function () {
+                var length;
+
+                gb.load++;
+                length = gb.images.length;
+
+                if (gb.load === length) {
+                    ut.game.launch();
+                }
             }
         };
 
