@@ -205,16 +205,14 @@
                 gb.item = item;
             },
 
-            drop: function (obj) {
-                var numSprite, sprite, image;
+            drop: function (client) {
+                var numSprite, sprite;
 
                 numSprite = gb.item.numSprite;
                 sprite = gb.sprites[numSprite];
-                image = gb.images[sprite.images];
+                gb.cases[client.square].texture = sprite;
 
-                gb.cases[gb.client.square].texture = image;
-                console.log(gb.cases[gb.client.square].texture);
-
+                ut.game.proposedObject();
             },
 
             hover: function (event) {
@@ -227,7 +225,7 @@
             },
 
             click: function (event) {
-                var posX, posY, col, row, client, squareNo;
+                var posX, posY, client;
 
                 posX = event.pageX - gb.bounding.left;
                 posY = event.pageY - gb.bounding.top;
@@ -294,8 +292,7 @@
 
                 gb.timeInterval = 1000 / (thisTime - gb.lastTime);
                 gb.lastTime = thisTime;
-
-                if (gb.frame % 10 == 0) {
+                if (gb.frame % 10 === 0) {
                     gb.avgFps = Math.round(gb.timeInterval * 10) / 10;
                 }
 
@@ -308,4 +305,3 @@
     ut.game.init();
 
 }(jQuery));
-//@TODO: code pattern ut/game ?
