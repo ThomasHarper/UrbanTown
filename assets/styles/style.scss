@@ -9,6 +9,20 @@ vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hg
 body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,
 q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}textarea:focus, input:focus{outline: 0;}
 
+body {
+  font-family: 'open sans', 'arial';
+}
+
+#fps {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: rgba(#000, 0.5);
+  padding: 10px;
+  color: #fff;
+  font-size: 40px;
+}
+
 canvas {
   width: 1000px;
   display: none;
