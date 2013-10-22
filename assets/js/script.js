@@ -40,16 +40,28 @@
                 {images: 1, x: 0, y: 0, h: 0, w: 0},
                 {images: 2, x: 0, y: 0, h: 0, w: 0},
                 {images: 3, x: 0, y: 0, h: 0, w: 0}
+            ],
+
+            props: [
+                {name: "Tent", score: 0, numSprite: 0, probability: 0.8},
+                {name: "Wooden hunt", score: 0, numSprite: 0, probability: 0.15},
+                {name: "Small house", score: 0, numSprite: 0, probability: 0.05},
+                {name: "House", score: 0, numSprite: 0, probability: 0},
+                {name: "Villa", score: 0, numSprite: 0, probability: 0},
+                {name: "Palace", score: 0, numSprite: 0, probability: 0.},
+                {name: "Apartment", score: 0, numSprite: 0, probability: 0},
+                {name: "Building", score: 0, numSprite: 0, probability: 0},
+                {name: "Golden building", score: 0, numSprite: 0, probability: 0}
             ]
         };
 
         //-- Object to store game entities --//
-        Cases = function (no, x, y, sol, skin) {
+        Cases = function (no, x, y, sol, texture) {
             this.no = no;
             this.x = x;
             this.y = y;
             this.sol = sol;
-            this.skin = skin;
+            this.texture = texture;
         };
         Client = function (x, y) {
             this.x = x;
@@ -107,7 +119,7 @@
                     oneCase.x = posX;
                     oneCase.y = posY;
                     oneCase.sol = color;
-                    oneCase.skin = 'skin';
+                    oneCase.texture = 'skin';
 
                     gb.cases[(gb.gridX * gb.gridY) - i] = oneCase;
 
@@ -143,20 +155,20 @@
                 requestAnimationFrame(ut.game.loop);
             },
 
-            hover: function (evt) {
+            hover: function (event) {
                 var client = new Client();
 
-                client.x = evt.pageX - gb.bounding.left;
-                client.y = evt.pageY - gb.bounding.top;
+                client.x = event.pageX - gb.bounding.left;
+                client.y = event.pageY - gb.bounding.top;
 
                 gb.client = client;
             },
 
-            click: function (evt) {
+            click: function (event) {
                 var posX, posY, col, row, client, squareNo;
 
-                posX = evt.pageX - gb.bounding.left;
-                posY = evt.pageY - gb.bounding.top;
+                posX = event.pageX - gb.bounding.left;
+                posY = event.pageY - gb.bounding.top;
 
                 client = ut.game.inCanvas(posX, posY);
 
@@ -196,6 +208,17 @@
                     img.src = gb.images[length - 1];
                     gb.images[length - 1] = img;
                 }
+            },
+
+            proposedObject: function () {
+                proposed = gb.props.slice(0,3);
+                
+                random = Math.random();                
+                switch (random) {
+                    case random <= 0.8
+                        return proposed[0][probability];
+                    break;
+                }                
             }
         };
 
