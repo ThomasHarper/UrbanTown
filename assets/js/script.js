@@ -210,13 +210,16 @@
             },
 
             drop: function (client) {
-                var numSprite, sprite;
+                var numSprite, sprite, oneCase;
 
                 numSprite = gb.item.numSprite;
                 sprite = gb.sprites[numSprite];
-                gb.cases[client.square].texture = sprite;
 
-                ut.game.proposedObject();
+                oneCase = gb.cases[client.square];
+                if (!oneCase.texture.sw) {
+                    gb.cases[client.square].texture = sprite;
+                    ut.game.proposedObject();
+                }
             },
 
             hover: function (event) {
