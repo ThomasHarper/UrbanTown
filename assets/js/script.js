@@ -106,33 +106,42 @@
                 //Loop
                 ut.game.loop();
 
+                console.log(gb.cases);
             },
 
             drawMap: function () {
                 var i = (gb.gridX * gb.gridY), row = 0, col = 0,
-                    posX, posY, oneCase, color, sprite, random;
+                    posX, posY, oneCase, sprite, tent, square;
 
                 for (i; i > 0; i--) {
                     posX = gb.marginLeft + (gb.square * col);
                     posY = gb.marginTop + (gb.square * row);
+                    square = (gb.gridX * gb.gridY) - i;
 
                     //set sol
                     sprite = gb.sprites[0];
                     gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
                         sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
 
-                    //set texture
-                    //@TODO => tant = Math.random() ;
-
                     //set case object
                     oneCase = new Cases();
-                    oneCase.no = (gb.gridX * gb.gridY) - i;
+                    oneCase.no = square;
                     oneCase.x = posX;
                     oneCase.y = posY;
                     oneCase.sol = sprite;
                     oneCase.texture = '';
 
-                    gb.cases[(gb.gridX * gb.gridY) - i] = oneCase;
+                    //set texture
+                    tent = Math.random() > 0.92 ? true : false;
+                    if (tent) {
+                        sprite = gb.sprites[1];
+                        gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                            sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
+                        oneCase.texture = sprite;
+                    }
+
+                    //stock case
+                    gb.cases[square] = oneCase;
 
                     col++;
                     if (col > (gb.gridX - 1)) {
@@ -154,23 +163,25 @@
 
                     gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
                         sprite.sw, sprite.sh, oneCase.x, oneCase.y, gb.square, gb.square);
+
+                    sprite = gb.cases[i - 1].texture;
+                    if (sprite.sw) {
+                        gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                            sprite.sw, sprite.sh, oneCase.x, oneCase.y, gb.square, gb.square);
+                        gb.cases[i - 1].texture = sprite;
+                    }
                 }
 
                 //if cursor is in map
                 client = ut.game.inCanvas(gb.client.x, gb.client.y);
                 if (client) {
-                    //@TODO: real hover
-                    /* actual square = gb.cases[(col + (row - 1)  * 7) - 1] */
-                    //rgba onHover
-                    // gb.context.fillStyle = 'rgba(255, 255, 255, 0.5)';
-                    // gb.context.fillRect(gb.cases[client.square].x, gb.cases[client.square].y, gb.square, gb.square);
-                    oneCase = gb.cases[client.square];
+
                     numSprite = gb.item.numSprite;
                     sprite = gb.sprites[numSprite];
 
                     image = gb.images[sprite.images];
                     gb.context.drawImage(image, sprite.sx, sprite.sy,
-                        sprite.sw, sprite.sh, gb.cases[client.square].x, gb.cases[client.square].y, gb.square, gb.square);                    
+                        sprite.sw, sprite.sh, gb.cases[client.square].x, gb.cases[client.square].y, gb.square, gb.square);
                 }
 
                 //FPS
@@ -192,7 +203,6 @@
                 }
 
                 gb.item = item;
-                console.log(gb.item);
             },
 
             drop: function (obj) {
