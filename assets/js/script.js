@@ -50,7 +50,13 @@
                 {name: "Apartment", score: 0, numSprite: 0, probability: 0},
                 {name: "Building", score: 0, numSprite: 0, probability: 0},
                 {name: "Golden building", score: 0, numSprite: 0, probability: 0}
-            ]
+            ],
+
+            //FPS
+            timeInterval: 0,
+            lastTime: 0,
+            frame: 0,
+            avgFps: 0
         };
 
         //-- Object to store game entities --//
@@ -76,6 +82,7 @@
 
                 //Set jQuery globals
                 gb.$canvas = $('canvas:first');
+                gb.$fps = $('#fps').find('span');
 
                 //Canvas basic
                 gb.context = gb.$canvas[0].getContext('2d');
@@ -101,17 +108,20 @@
             },
 
             drawMap: function () {
-                var i = (gb.gridX * gb.gridY), row = 0,
-                    col = 0, posX, posY, oneCase, color, sprite;
+                var i = (gb.gridX * gb.gridY), row = 0, col = 0,
+                    posX, posY, oneCase, color, sprite, random;
 
                 for (i; i > 0; i--) {
                     posX = gb.marginLeft + (gb.square * col);
                     posY = gb.marginTop + (gb.square * row);
 
-                    //set texture
+                    //set sol
                     sprite = gb.sprites[0];
                     gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
                         sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
+
+                    //set texture
+                    //@TODO => tant = Math.random() ;
 
                     //set case object
                     oneCase = new Cases();
@@ -143,7 +153,6 @@
 
                     gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
                         sprite.sw, sprite.sh, oneCase.x, oneCase.y, gb.square, gb.square);
-
                 }
 
                 //if cursor is in map
@@ -162,6 +171,9 @@
                     gb.context.drawImage(image, sprite.sx, sprite.sy,
                         sprite.sw, sprite.sh, gb.cases[client.square].x, gb.cases[client.square].y, gb.square, gb.square);                    
                 }
+
+                //FPS
+                gb.$fps.html(ut.fps.get());
 
                 requestAnimationFrame(ut.game.loop);
             },
@@ -256,11 +268,26 @@
             }
         };
 
+        ut.fps = {
+            get: function () {
+                gb.frame++;
+                var date = new Date(),
+                    thisTime = date.getTime();
+
+                gb.timeInterval = 1000 / (thisTime - gb.lastTime);
+                gb.lastTime = thisTime;
+
+                if (gb.frame % 10 == 0) {
+                    gb.avgFps = Math.round(gb.timeInterval * 10) / 10;
+                }
+
+                return gb.avgFps.toFixed(0);
+            }
+        };
     }(ut));
 
     //-- CALL --//
     ut.game.init();
 
 }(jQuery));
-
 //@TODO: code pattern ut/game ?
