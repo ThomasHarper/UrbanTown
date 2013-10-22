@@ -31,15 +31,12 @@
 
             // Sprites
             images : [
-                'sprit1.jpg',
-                'sprite2.jpg',
-                'sprite3.jpg'
+                'sprite-dev.png'
             ],
             sprites: [
-                {images: 0, x: 0, y: 0, h: 0, w: 0},
-                {images: 1, x: 0, y: 0, h: 0, w: 0},
-                {images: 2, x: 0, y: 0, h: 0, w: 0},
-                {images: 3, x: 0, y: 0, h: 0, w: 0}
+                {images: 0, x: 0, y: 0, h: 100, w: 100},
+                {images: 0, x: 100, y: 0, h: 100, w: 100},
+                {images: 0, x: 200, y: 0, h: 100, w: 100}
             ],
 
             props: [
@@ -115,7 +112,7 @@
 
                     //set case object
                     oneCase = new Cases();
-                    oneCase.no = (gb.gridX * (gb.gridY - 1)) - i;
+                    oneCase.no = (gb.gridX * gb.gridY) - i;
                     oneCase.x = posX;
                     oneCase.y = posY;
                     oneCase.sol = color;
@@ -205,7 +202,7 @@
 
                 for (length; length > 0; length--) {
                     img = new Image();
-                    img.src = gb.images[length - 1];
+                    img.src = gb.imgPath + gb.images[length - 1];
                     gb.images[length - 1] = img;
                 }
             },
