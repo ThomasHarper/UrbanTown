@@ -206,15 +206,14 @@
             },
 
             drop: function (obj) {
-                var oneCase;
+                var numSprite, sprite, image;
 
-                oneCase = gb.cases[client.square];
                 numSprite = gb.item.numSprite;
                 sprite = gb.sprites[numSprite];
-                image = gb.images[sprite.images]; 
+                image = gb.images[sprite.images];
 
-                gb.cases[client.square].texture = image;
-                console.log(gb.cases[client.square].texture);
+                gb.cases[gb.client.square].texture = image;
+                console.log(gb.cases[gb.client.square].texture);
 
             },
 
