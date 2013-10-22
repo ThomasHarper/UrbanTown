@@ -153,8 +153,9 @@
 
             //Core function
             loop: function () {
-                var i, oneCase, client, sprite, numSprite, image;
+                var i, oneCase, client, sprite, numSprite, image, itemSet;
 
+                itemSet = false;
                 //ReDraw grid
                 for (i = gb.gridX * gb.gridY; i > 0; i--) {
 
@@ -176,12 +177,15 @@
                 client = ut.game.inCanvas(gb.client.x, gb.client.y);
                 if (client) {
 
-                    numSprite = gb.item.numSprite;
-                    sprite = gb.sprites[numSprite];
+                    if (!gb.cases[client.square].texture.sw) {
 
-                    image = gb.images[sprite.images];
-                    gb.context.drawImage(image, sprite.sx, sprite.sy,
-                        sprite.sw, sprite.sh, gb.cases[client.square].x, gb.cases[client.square].y, gb.square, gb.square);
+                        numSprite = gb.item.numSprite;
+                        sprite = gb.sprites[numSprite];
+
+                        image = gb.images[sprite.images];
+                        gb.context.drawImage(image, sprite.sx, sprite.sy,
+                            sprite.sw, sprite.sh, gb.cases[client.square].x, gb.cases[client.square].y, gb.square, gb.square);
+                    }
                 }
 
                 //FPS
