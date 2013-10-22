@@ -37,12 +37,13 @@
             ],
             sprites: [
                 {images: 0, sx: 0, sy: 0, sw: 100, sh: 100},
-                {images: 0, sx: 100, sy: 0, sw: 100, sh: 100}
+                {images: 0, sx: 100, sy: 0, sw: 100, sh: 100},
+                {images: 0, sx: 200, sy: 0, sw: 100, sh: 100}
             ],
 
             props: [
                 {name: "Tent", score: 0, numSprite: 1, probability: 0.8},
-                {name: "Wooden hunt", score: 0, numSprite: 0, probability: 0.15},
+                {name: "Wooden hunt", score: 0, numSprite: 2, probability: 0.15},
                 {name: "Small house", score: 0, numSprite: 0, probability: 0.05},
                 {name: "House", score: 0, numSprite: 0, probability: 0},
                 {name: "Villa", score: 0, numSprite: 0, probability: 0},
@@ -163,11 +164,11 @@
                     //rgba onHover
                     // gb.context.fillStyle = 'rgba(255, 255, 255, 0.5)';
                     // gb.context.fillRect(gb.cases[client.square].x, gb.cases[client.square].y, gb.square, gb.square);
-                    oneCase = gb.cases[client.square];                    
+                    oneCase = gb.cases[client.square];
                     numSprite = gb.item.numSprite;
-                    
                     sprite = gb.sprites[numSprite];
-                    image = gb.images[sprite.images];                    
+
+                    image = gb.images[sprite.images];
                     gb.context.drawImage(image, sprite.sx, sprite.sy,
                         sprite.sw, sprite.sh, gb.cases[client.square].x, gb.cases[client.square].y, gb.square, gb.square);                    
                 }
@@ -180,22 +181,18 @@
 
             proposedObject: function () {
                 var proposed, random, item;
-                proposed = gb.props.slice(0, 3);                
+                proposed = gb.props.slice(0, 3);
                 random = Math.random();
-                if(random < 0.8)
-                {
+                if (random < 0.8) {
                     item = proposed[0];
-                }
-                else if(random > 0.8 && random < 0.95)
-                {
+                } else if (random > 0.8 && random < 0.95) {
                     item = proposed[1];
-                }
-                else if(random > 0.95 && random <= 1)
-                {
+                } else if (random > 0.95 && random <= 1) {
                     item = proposed[2];
-                }          
+                }
+
                 gb.item = item;
-                console.log(gb.item);  
+                console.log(gb.item);
             },
 
             hover: function (event) {
