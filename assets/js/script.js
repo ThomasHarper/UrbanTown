@@ -198,6 +198,19 @@
                 console.log(gb.item);  
             },
 
+            drop: function (obj) {
+                var oneCase;
+
+                oneCase = gb.cases[client.square];
+                numSprite = gb.item.numSprite;
+                sprite = gb.sprites[numSprite];
+                image = gb.images[sprite.images]; 
+
+                gb.cases[client.square].texture = image;
+                console.log(gb.cases[client.square].texture);
+
+            },
+
             hover: function (event) {
                 var client = new Client();
 
@@ -216,8 +229,7 @@
                 client = ut.game.inCanvas(posX, posY);
 
                 if (client) {
-                    //@TODO: click action
-                    console.log(client);
+                    ut.game.drop(client);
                 }
             },
 
