@@ -36,11 +36,12 @@
                 'sprite-dev.png'
             ],
             sprites: [
-                {images: 0, sx: 0, sy: 0, sw: 100, sh: 100}
+                {images: 0, sx: 0, sy: 0, sw: 100, sh: 100},
+                {images: 0, sx: 100, sy: 0, sw: 100, sh: 100}
             ],
 
             props: [
-                {name: "Tent", score: 0, numSprite: 0, probability: 0.8},
+                {name: "Tent", score: 0, numSprite: 1, probability: 0.8},
                 {name: "Wooden hunt", score: 0, numSprite: 0, probability: 0.15},
                 {name: "Small house", score: 0, numSprite: 0, probability: 0.05},
                 {name: "House", score: 0, numSprite: 0, probability: 0},
@@ -91,8 +92,9 @@
             launch: function () {
                 //draw map
                 ut.game.drawMap();
-
                 ut.game.proposedObject();
+
+                gb.$canvas.show();
                 //Loop
                 ut.game.loop();
 
@@ -108,7 +110,6 @@
 
                     //set texture
                     sprite = gb.sprites[0];
-
                     gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
                         sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
 
@@ -132,7 +133,7 @@
 
             //Core function
             loop: function () {
-                var i, oneCase, client, sprite;
+                var i, oneCase, client, sprite, numSprite, image;
 
                 //ReDraw grid
                 for (i = gb.gridX * gb.gridY; i > 0; i--) {
@@ -153,8 +154,13 @@
                     //rgba onHover
                     // gb.context.fillStyle = 'rgba(255, 255, 255, 0.5)';
                     // gb.context.fillRect(gb.cases[client.square].x, gb.cases[client.square].y, gb.square, gb.square);
-
-                    console.log(gb.item)
+                    oneCase = gb.cases[client.square];                    
+                    numSprite = gb.item.numSprite;
+                    
+                    sprite = gb.sprites[numSprite];
+                    image = gb.images[sprite.images];                    
+                    gb.context.drawImage(image, sprite.sx, sprite.sy,
+                        sprite.sw, sprite.sh, gb.cases[client.square].x, gb.cases[client.square].y, gb.square, gb.square);                    
                 }
 
                 requestAnimationFrame(ut.game.loop);
