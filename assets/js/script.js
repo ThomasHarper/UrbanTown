@@ -77,6 +77,7 @@
                     posX = gb.marginLeft + (gb.square * col);
                     posY = gb.marginTop + (gb.square * row);
 
+                    //@TODO: real grid skin
                     //random color
                     color  = '#' + Math.floor(Math.random() * 16777215).toString(16);
 
@@ -107,6 +108,7 @@
 
                 //ReDraw grid
                 for (i = gb.gridX * gb.gridY; i > 0; i--) {
+                    //@TODO: Real grid draw
                     gb.context.fillStyle = gb.cases[i - 1].sol;
                     gb.context.fillRect(gb.cases[i - 1].x, gb.cases[i - 1].y, gb.square, gb.square);
                 }
@@ -114,6 +116,7 @@
                 //if cursor is in map
                 client = ut.game.inCanvas(gb.client.x, gb.client.y);
                 if (client) {
+                    //@TODO: real hover
                     /* actual square = gb.cases[(col + (row - 1)  * 7) - 1] */
                     //rgba onHover
                     gb.context.fillStyle = 'rgba(255, 255, 255, 0.5)';
@@ -143,7 +146,7 @@
 
                 squareNo = (col + (row - 1)  * 7) - 1;
 
-                //Do click action
+                //@TODO: Do click action
             },
 
             inCanvas: function (x, y) {
@@ -171,3 +174,5 @@
     ut.game.init();
 
 }(jQuery));
+
+//@TODO: code pattern ut/game ?
