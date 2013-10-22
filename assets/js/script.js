@@ -208,12 +208,22 @@
             },
 
             proposedObject: function () {
+                var proposed,random;
                 proposed = gb.props.slice(0,3);
                 
                 random = Math.random();                
                 switch (random) {
-                    case random <= 0.8
-                        return proposed[0][probability];
+                    case random < 0.8:
+                        return proposed[0];
+                    break;
+                    case random > 0.8 && random < 0.95:
+                        return proposed[1];
+                    break;
+                    case random > 0.95 && random <= 1:
+                        return proposed[2];
+                    break;
+                    default:
+                        return proposed[0];
                     break;
                 }                
             }
