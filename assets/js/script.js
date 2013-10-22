@@ -105,7 +105,6 @@
 
                     //set texture
                     sprite = gb.sprites[0];
-
                     gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
                         sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
 
