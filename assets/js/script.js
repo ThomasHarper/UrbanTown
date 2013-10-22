@@ -21,12 +21,26 @@
             square: 100,
             marginTop: 20,
             marginLeft: 20,
+            imgPath: './assets/images/',
 
             //canvas var
             context: '',
             bounding: {},
             cases: [],
-            client: {}
+            client: {},
+
+            // Sprites
+            images : [
+                'sprit1.jpg',
+                'sprite2.jpg',
+                'sprite3.jpg'
+            ],
+            sprites: [
+                {images: 0, x: 0, y: 0, h: 0, w: 0},
+                {images: 1, x: 0, y: 0, h: 0, w: 0},
+                {images: 2, x: 0, y: 0, h: 0, w: 0},
+                {images: 3, x: 0, y: 0, h: 0, w: 0}
+            ]
         };
 
         //-- Object to store game entities --//
@@ -46,6 +60,9 @@
         ut.game = {
 
             init: function () {
+
+                //Load component
+                ut.game.loadImages();
 
                 //Set jQuery globals
                 gb.$canvas = $('canvas:first');
@@ -136,35 +153,49 @@
             },
 
             click: function (evt) {
-                var posX, posY, col, row, squareNo;
+                var posX, posY, col, row, client, squareNo;
 
                 posX = evt.pageX - gb.bounding.left;
                 posY = evt.pageY - gb.bounding.top;
 
-                col = Math.ceil((gb.client.x - gb.marginLeft) / gb.square);
-                row = Math.ceil((gb.client.y - gb.marginTop) / gb.square);
+                client = ut.game.inCanvas(posX, posY);
 
-                squareNo = (col + (row - 1)  * 7) - 1;
-
-                //@TODO: Do click action
+                if (client) {
+                    //@TODO: click action
+                    console.log(client);
+                }
             },
 
             inCanvas: function (x, y) {
                 var col, row, square, toReturn;
 
                 toReturn = false;
+                gb.$canvas.css('cursor', 'default');
 
-                if ((gb.client.x > gb.marginLeft && gb.client.x < (gb.square * gb.gridX + gb.marginLeft))
-                    && (gb.client.y > gb.marginTop && gb.client.y < (gb.square * gb.gridY + gb.marginTop))) {
+                if ((x > gb.marginLeft && x < (gb.square * gb.gridX + gb.marginLeft))
+                    && (y > gb.marginTop && y < (gb.square * gb.gridY + gb.marginTop))) {
 
-                    col = Math.ceil((gb.client.x - gb.marginLeft) / gb.square);
-                    row = Math.ceil((gb.client.y - gb.marginTop) / gb.square);
+                    col = Math.ceil((x - gb.marginLeft) / gb.square);
+                    row = Math.ceil((y - gb.marginTop) / gb.square);
                     square = col + (row - 1)  * 7 - 1;
 
                     toReturn = {col: col, row: row, square: square};
+                    gb.$canvas.css('cursor', 'pointer');
                 }
 
                 return toReturn;
+            },
+
+            loadImages: function () {
+                var length, img;
+
+                length = gb.images.length;
+
+                for (length; length > 0; length--) {
+                    img = new Image();
+                    img.src = gb.images[length - 1];
+                    gb.images[length - 1] = img;
+                }
             }
         };
 
