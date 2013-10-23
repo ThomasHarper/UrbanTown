@@ -212,8 +212,101 @@
                 oneCase = gb.cases[client.square];
                 if (!oneCase.texture.sw) {
                     gb.cases[client.square].texture = sprite;
+                    elem = gb.cases[client.square];
                     ut.game.proposedObject();
+
+                    twoPac = ut.game.kamehameha(client.square, elem);
+                    //console.log(twoPac);
                 }
+            },
+
+            //THE EPICEST FUNCTIONS EVER
+            kamehameha: function (squareNo, elem) {
+                var elems, length;
+
+                //on recupere les 4 elements autour de la case clique
+                elems = ut.game.findNext(elem, [true, true, true, true], 0);
+
+                length = elems.length;
+
+                if (length >= 2) {
+                    for (length; length > 0; length--) {
+                        //si on a + 2 elem autour on erase
+                        gb.cases[elems[length - 1]].texture = '';
+                    }
+                    //on draw une nouvelle texture sur la case
+                    gb.cases[squareNo].texture = gb.sprites[gb.cases[squareNo].texture.id + 1];
+                    //MAGIC !
+                    ut.game.kamehameha(squareNo, gb.cases[squareNo]);
+                }
+
+                return elems;
+            },
+
+            findNext: function (elem, direction, level) {
+                var c1, c2, c3, c4, handle = [];
+
+                if (direction[0]) {//top
+                    c1 = gb.cases[elem.no - gb.gridX];
+
+                    if (direction[0] && c1 && c1.texture.id === elem.texture.id) {
+                        switch (level) {
+                        case 0:
+                            handle.push(c1.no);
+                            handle = handle.concat(ut.game.findNext(c1, [true, true, false, true], 1));
+                            break;
+                        case 1:
+                            handle.push(c1.no);
+                            break;
+                        }
+                    }
+                }
+                if (direction[1]) {//right
+                    c2 = gb.cases[elem.no + 1];
+
+                    if (direction[1] && c2 && c2.texture.id === elem.texture.id) {
+                        switch (level) {
+                        case 0:
+                            handle.push(c2.no);
+                            handle = handle.concat(ut.game.findNext(c2, [true, true, true, false], 1));
+                            break;
+                        case 1:
+                            handle.push(c2.no);
+                            break;
+                        }
+                    }
+                }
+                if (direction[2]) {//bottom
+                    c3 = gb.cases[elem.no + gb.gridX];
+
+                    if (direction[2] && c3 && c3.texture.id === elem.texture.id) {
+                        switch (level) {
+                        case 0:
+                            handle.push(c3.no);
+                            handle = handle.concat(ut.game.findNext(c3, [false, true, true, true], 1));
+                            break;
+                        case 1:
+                            handle.push(c3.no);
+                            break;
+                        }
+                    }
+                }
+                if (direction[3]) {//left
+                    c4 = gb.cases[elem.no - 1];
+                    if (direction[3] && c4 && c4.texture.id === elem.texture.id) {
+                        switch (level) {
+                        case 0:
+                            handle.push(c4.no);
+                            handle = handle.concat(ut.game.findNext(c4, [true, false, true, true], 1));
+                            break;
+                        case 1:
+                            handle.push(c4.no);
+                            break;
+                        }
+                    }
+                }
+
+                return handle;
             },
 
             hover: function (event) {
