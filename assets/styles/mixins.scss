@@ -1,0 +1,23 @@
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+       -o-border-radius: $radius;
+          border-radius: $radius;
+}
+
+@mixin animation($value) {
+  -webkit-animation: $value;
+     -moz-animation: $value;
+      -ms-animation: $value;
+       -o-animation: $value;
+          animation: $value;
+}
+
+@mixin box-sizing($value) {
+  -webkit-box-sizing: $value;
+     -moz-box-sizing: $value;
+      -ms-box-sizing: $value;
+       -o-box-sizing: $value;
+          box-sizing: $value;
+}
