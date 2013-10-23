@@ -19,8 +19,8 @@
             gridX: 7,
             gridY: 7,
             square: 100,
-            marginTop: 20,
-            marginLeft: 20,
+            marginTop: 0,
+            marginLeft: 0,
             imgPath: './assets/images/',
             load: 0,
 
