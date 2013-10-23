@@ -57,13 +57,7 @@
                 {name: "Apartment", score: 0, numSprite: 0, probability: 0},
                 {name: "Building", score: 0, numSprite: 0, probability: 0},
                 {name: "Golden building", score: 0, numSprite: 0, probability: 0}
-            ],
-
-            //FPS
-            timeInterval: 0,
-            lastTime: 0,
-            frame: 0,
-            avgFps: 0
+            ]
         };
 
         //-- Object to store game entities --//
@@ -91,7 +85,6 @@
 
                 //Set jQuery globals
                 gb.$canvas = $('canvas:first');
-                gb.$fps = $('#fps').find('span');
 
                 //Canvas basic
                 gb.context = gb.$canvas[0].getContext('2d');
@@ -194,9 +187,6 @@
                     }
                 }
 
-                //FPS
-                gb.$fps.html(ut.fps.get());
-
                 requestAnimationFrame(ut.game.loop);
             },
 
@@ -290,23 +280,9 @@
                     ut.game.launch();
                 }
             }
+
         };
 
-        ut.fps = {
-            get: function () {
-                gb.frame++;
-                var date = new Date(),
-                    thisTime = date.getTime();
-
-                gb.timeInterval = 1000 / (thisTime - gb.lastTime);
-                gb.lastTime = thisTime;
-                if (gb.frame % 10 === 0) {
-                    gb.avgFps = Math.round(gb.timeInterval * 10) / 10;
-                }
-
-                return gb.avgFps.toFixed(0);
-            }
-        };
     }(ut));
 
     //-- CALL --//
