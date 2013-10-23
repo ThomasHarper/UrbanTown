@@ -1,15 +1,17 @@
 <?php
 
 // identifiants BDD
-$config['bdd']['server'] = "127.0.0.1";
+$config['bdd']['server'] = "localhost";
 $config['bdd']['user'] = "root";
-$config['bdd']['pass'] = "";
-$config['bdd']['base'] = "";
+$config['bdd']['pass'] = "root";
+$config['bdd']['base'] = "game";
 
 // config['routes'] liste les actions legales
 // et le sous-controllers correspondant
 $config['routes'] = array(
-    "home"	=> "home"
+    "home"	=> "home",
+    "signup" => "home",
+    "signin" => "home"
 );
 
 //Mode Debugg

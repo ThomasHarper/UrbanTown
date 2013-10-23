@@ -30,6 +30,8 @@
             cases: [],
             client: {},
             item: {},
+            player: {},
+            score: {},
 
             // Sprites
             images : [
@@ -72,6 +74,12 @@
         Client = function (x, y) {
             this.x = x;
             this.y = y;
+        };
+        Player = function (name) {
+            this.name = name;
+        };
+        Game = function (score){
+            this.score = score;
         };
 
         //-- Game loop function --//

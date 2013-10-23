@@ -30,12 +30,11 @@ $smarty = new Smarty();
 require_once('./includes/modifier.php');
 
 //connecter a la base de donnee
-/*
 $link = mysqli_connect($config['bdd']['server'],
 	$config['bdd']['user'],
 	$config['bdd']['pass'],
 	$config['bdd']['base']);
-*/
+
 //Si fail de la connection
 if (mysqli_connect_errno())
 {
