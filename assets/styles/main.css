@@ -1,0 +1,217 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+@font-face {
+  font-family: 'MuseoSans-500';
+  src: url("../fonts/28C7B9_0_0.eot");
+  src: url("../fonts/28C7B9_0_0.eot?#iefix") format("embedded-opentype"), url("../fonts/28C7B9_0_0.woff") format("woff"), url("../fonts/28C7B9_0_0.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'bebas_neueregular';
+  src: url("../fonts/BebasNeue-webfont.eot");
+  src: url("../fonts/BebasNeue-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/BebasNeue-webfont.woff") format("woff"), url("../fonts/BebasNeue-webfont.ttf") format("truetype"), url("../fonts/BebasNeue-webfont.svg#bebas_neueregular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+body {
+  font-family: "MuseoSans-500", arial, sans-serif; }
+
+*:focus {
+  outline: 0; }
+
+#fps {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  color: #fff;
+  font-size: 40px; }
+
+canvas {
+  width: 1000px;
+  display: none;
+  height: 740px;
+  border: 1px solid #000;
+  margin: auto; }
+
+.homepage {
+  background-color: #e4dcc6; }
+  .homepage h1 {
+    text-align: center;
+    padding: 60px 0; }
+  .homepage form {
+    width: 400px;
+    margin: auto; }
+    .homepage form .register-title {
+      font-family: "bebas_neueregular", sans-serif;
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #db7743;
+      text-align: center; }
+    .homepage form label {
+      display: block;
+      color: #beb8a7;
+      text-transform: uppercase;
+      margin-bottom: 10px; }
+    .homepage form input[type="text"],
+    .homepage form input[type="password"] {
+      width: 100%;
+      height: 35px;
+      margin-bottom: 20px;
+      border: 1px solid #beb8a7;
+      padding-left: 10px;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      -ms-border-radius: 2px;
+      -o-border-radius: 2px;
+      border-radius: 2px;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -ms-box-sizing: border-box;
+      -o-box-sizing: border-box;
+      box-sizing: border-box; }
+      .homepage form input[type="text"]:focus,
+      .homepage form input[type="password"]:focus {
+        border-color: #9e957b; }
+    .homepage form input[type="submit"] {
+      background-color: #6aa963;
+      width: 100%;
+      cursor: pointer;
+      height: 40px;
+      font-family: "MuseoSans-500", sans-serif;
+      font-size: 16px;
+      line-height: 18px;
+      color: #f9f6e9;
+      border: 1px solid #619a5d;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      -ms-border-radius: 2px;
+      -o-border-radius: 2px;
+      border-radius: 2px; }
+      .homepage form input[type="submit"]:hover {
+        background-color: #7ab273; }
+      .homepage form input[type="submit"]:active {
+        position: relative;
+        top: 2px; }
+
+aside {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 260px;
+  background-color: #e4dcc6; }
+  aside:before {
+    position: absolute;
+    content: url(../images/sidebar-before.png);
+    margin-left: -11px; }
+  aside .nom {
+    background: url(../images/bg-nom.png) no-repeat;
+    width: 226px;
+    height: 79px;
+    margin: auto;
+    text-align: center;
+    font-family: "bebas_neueregular", sans-serif;
+    font-size: 36px;
+    line-height: 70px;
+    color: #db7743; }
+  aside .score {
+    text-align: center;
+    margin: 40px 0; }
+    aside .score .info-titre {
+      text-transform: uppercase;
+      color: #beb8a7; }
+    aside .score .info-score {
+      color: #989486;
+      font-size: 20px; }
+    aside .score .progress {
+      width: 86%;
+      height: 6px;
+      margin: 5px auto 0;
+      background-color: #f9f6e9;
+      -webkit-border-radius: 40px;
+      -moz-border-radius: 40px;
+      -ms-border-radius: 40px;
+      -o-border-radius: 40px;
+      border-radius: 40px;
+      border: 2px solid #f9f6e9; }
+      aside .score .progress .inprogress {
+        background-color: #db7743;
+        width: 60px;
+        height: 100%;
+        display: block;
+        -webkit-border-radius: 40px;
+        -moz-border-radius: 40px;
+        -ms-border-radius: 40px;
+        -o-border-radius: 40px;
+        border-radius: 40px; }
+  aside .buttons {
+    margin-top: 100px; }
+    aside .buttons h3 {
+      color: #beb8a7;
+      font-size: 16px;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 40px; }
+    aside .buttons .new-game {
+      background: url(../images/boutons.png) no-repeat;
+      margin: 0 auto 50px;
+      display: block;
+      width: 135px;
+      height: 125px; }
+      aside .buttons .new-game:hover {
+        background-position: 0 -125px; }
+    aside .buttons .quit-game {
+      background: url(../images/boutons.png) no-repeat;
+      margin: auto;
+      background-position: -135px 0;
+      display: block;
+      width: 135px;
+      height: 125px; }
+      aside .buttons .quit-game:hover {
+        background-position: -135px -125px; }

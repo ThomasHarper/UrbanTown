@@ -1,37 +1,37 @@
-<table>
+<div class="homepage">
+	<h1>
+		<img src="assets/images/logo.png" alt="">
+	</h1>
+
 	<form action="?action=signin" method="post">
-		<tr>
-			<td>Login :</td>
-			<td><input id="login" type="text" name="login" placeholder="Enter your login"></td>
-		</tr>
-		<tr>
-			<td>Password :</td>
-			<td><input id="login" type="password" name="password" placeholder="Enter your password"></td>
-		</tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" value="Sign in"></td>
-		</tr>
+		<div class="login">
+			<label for="login-connect">Login</label>
+			<input id="login-connect" type="text" name="login" placeholder="luke skywalker@etoilenoir.com">
+		</div>
+
+		<div class="password">
+			<label for="password-connect">Password</label>
+			<input id="password-connect" type="password" name="password" placeholder="********">
+		</div>
+		
+		<input type="submit" value="Log in">
 	</form>
-</table>
-<br>
-<table>
+
+	<br>
+
 	<form action="?action=signup" method="post">
-		<tr>
-			<td>Haven't Sign Up Yet ?</td>
-			<td>&nbsp;</td>
-		</tr>
-		<tr>
-			<td>Login :</td>
-			<td><input id="login" type="text" name="login" placeholder="Enter your login"></td>
-		</tr>
-		<tr>
-			<td>Password :</td>
-			<td><input id="login" type="password" name="password" placeholder="Enter your password"></td>
-		</tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" value="Sign in"></td>
-		</tr>
+		<h2 class="register-title">Haven't Sign Up Yet ?</h2>
+
+		<div class="login">
+			<label for="login-register">Login</label>
+			<input id="login-register" type="text" name="login" placeholder="Enter your login">
+		</div>
+
+		<div class="password">
+			<label for="password-register">Password</label>
+			<input id="password-register" type="password" name="password" placeholder="Enter your password">
+		</div>
+
+		<input type="submit" value="Sign in">
 	</form>
-</table>
+</div>

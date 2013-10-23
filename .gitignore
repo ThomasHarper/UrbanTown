@@ -1,5 +1,10 @@
 .idea
-*.css
 *.psd
 /templates_c
 .DS_Store
+
+// Gruntfile to compile scss to css
+package.json
+Gruntfile.js
+.sass-cache/
+node_modules/

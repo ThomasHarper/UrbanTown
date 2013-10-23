@@ -1,17 +1,8 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,700);
-
-//Meyer CSS reset
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,
-em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,
-table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,
-nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;
-vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
-body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,
-q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}textarea:focus, input:focus{outline: 0;}
-
 body {
-  font-family: 'open sans', 'arial';
+  font-family: "MuseoSans-500", arial, sans-serif;
 }
+
+*:focus { outline: 0; }
 
 #fps {
   position: fixed;
@@ -29,4 +20,123 @@ canvas {
   height: 740px;
   border: 1px solid #000;
   margin: auto;
+}
+
+.homepage {
+  background-color: #e4dcc6;
+
+  h1 {
+    text-align: center;
+    padding: 60px 0;
+  }
+
+  form {
+    width: 400px;
+    margin: auto;
+
+    .register-title {
+      font-family: "bebas_neueregular", sans-serif;
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #db7743;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      color: #beb8a7;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      height: 35px;
+      margin-bottom: 20px;
+      border: 1px solid #beb8a7;
+      padding-left: 10px;
+      @include border-radius(2px);
+      @include box-sizing(border-box);
+    }
+
+    input[type="submit"] {
+      background-color: #6aa963;
+      width: 100%;
+      cursor: pointer;
+      height: 40px;
+      font-family: "MuseoSans-500", sans-serif;
+      font-size: 16px;
+      line-height: 18px;
+      color: #f9f6e9;
+      border: 1px solid #619a5d;
+      @include border-radius(2px);
+
+      &:hover { background-color: lighten(#6aa963, 5%); }
+      &:active { position: relative; top: 2px; }
+    }
+  }
+}
+
+// Sidebar informations
+aside {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 260px;
+  background-color: #e4dcc6;
+
+  .nom {
+    background: url(../images/bg-nom.png) no-repeat;
+    width: 226px;
+    height: 79px;
+    margin: auto;
+    text-align: center;
+    font-family: "bebas_neueregular", sans-serif;
+    font-size: 36px;
+    line-height: 70px;
+    color: #db7743;
+  }
+
+  .score {
+     .progress {
+      width: 86%;
+      height: 10px;
+      margin: auto;
+      background-color: #f9f6e9;
+      @include border-radius(40px);
+    }
+  }
+
+  .buttons {
+    h3 {
+      color: #beb8a7;
+      font-size: 16px;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .new-game {
+      background: url(../images/boutons.png) no-repeat;
+      margin: 0 auto 50px;
+      display: block;
+      width: 135px;
+      height: 125px;
+
+      &:hover { background-position: 0 -125px; }
+    }
+
+    .quit-game {
+      background: url(../images/boutons.png) no-repeat;
+      margin: auto;
+      background-position: -135px 0;
+      display: block;
+      width: 135px;
+      height: 125px;
+
+      &:hover { background-position: -135px -125px; }
+    }
+  }
 }
