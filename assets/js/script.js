@@ -9,7 +9,7 @@
     (function (ut) {
 
         //-- Object to store "global" var --//
-        var gb, Cases, Client;
+        var gb, Cases, Client, Player, Game;
 
         gb = {
             //jQuery elem
