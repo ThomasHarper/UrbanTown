@@ -95,7 +95,6 @@
                 //jQuery events
                 gb.$canvas.mousemove(ut.game.hover);
                 gb.$canvas.click(ut.game.click);
-                $(document).on('image-loaded', ut.game.preload);
             },
 
             launch: function () {
@@ -154,9 +153,8 @@
 
             //Core function
             loop: function () {
-                var i, oneCase, client, sprite, numSprite, image, itemSet;
+                var i, oneCase, client, sprite, numSprite, image;
 
-                itemSet = false;
                 //ReDraw grid
                 for (i = gb.gridX * gb.gridY; i > 0; i--) {
 
@@ -206,7 +204,6 @@
                 } else if (random > 0.95 && random <= 1) {
                     item = proposed[2];
                 }
-
                 gb.item = item;
             },
 
@@ -274,9 +271,7 @@
                     img = new Image();
                     img.src = gb.imgPath + gb.images[length - 1];
                     gb.images[length - 1] = img;
-                    img.onload = function () {
-                        $(document).trigger('image-loaded');
-                    };
+                    img.onload = ut.game.preload;
                 }
             },
 
