@@ -153,6 +153,7 @@
             loop: function () {
                 var i, oneCase, client, sprite, numSprite, image;
 
+                gb.context.clearRect(0, 0, gb.gridX * gb.square, gb.gridY * gb.square);
                 //ReDraw grid
                 for (i = gb.gridX * gb.gridY; i > 0; i--) {
 
