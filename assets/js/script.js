@@ -105,8 +105,6 @@
                 gb.$canvas.show();
                 //Loop
                 ut.game.loop();
-
-                console.log(gb.cases);
             },
 
             drawMap: function () {
