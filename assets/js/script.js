@@ -38,13 +38,14 @@
             sprites: [
                 {images: 0, sx: 0, sy: 0, sw: 100, sh: 100},
                 {images: 0, sx: 100, sy: 0, sw: 100, sh: 100},
-                {images: 0, sx: 200, sy: 0, sw: 100, sh: 100}
+                {images: 0, sx: 200, sy: 0, sw: 100, sh: 100},
+                {images: 0, sx: 300, sy: 0, sw: 100, sh: 100}
             ],
 
             props: [
                 {name: "Tent", score: 0, numSprite: 1, probability: 0.8},
                 {name: "Wooden hunt", score: 0, numSprite: 2, probability: 0.15},
-                {name: "Small house", score: 0, numSprite: 0, probability: 0.05},
+                {name: "Small house", score: 0, numSprite: 3, probability: 0.05},
                 {name: "House", score: 0, numSprite: 0, probability: 0},
                 {name: "Villa", score: 0, numSprite: 0, probability: 0},
                 {name: "Palace", score: 0, numSprite: 0, probability: 0},
