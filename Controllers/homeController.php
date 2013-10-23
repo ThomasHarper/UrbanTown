@@ -67,6 +67,10 @@
 			}
 			
 		}
-	}
+    }
+
+    if ($action === "fuckThisShit") {
+        $tpl = "game";
+    }
 
 ?>
