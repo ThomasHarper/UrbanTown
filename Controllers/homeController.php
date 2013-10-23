@@ -21,8 +21,12 @@
 			
 				if(myQuery($query))
 				{
+					$id = myLastInsertId();
 					$_SESSION['login'] = $login;
+					$_SESSION['id'] = $id;
+
 					$tpl = "game";
+
 				}
 				else
 				{
@@ -53,17 +57,21 @@
 		}
 		if (in_array(myEscape($_POST['login']), $all_logins) && !empty($_POST['login']) && !empty($_POST['password']))
 		{
-			$query = 'SELECT password FROM `players` WHERE login = "'.myEscape($_POST['login']).'"';
+			$query = 'SELECT id,password FROM `players` WHERE login = "'.myEscape($_POST['login']).'"';
 			$result = myFetchAssoc($query);
 			foreach ($result as $value) {
-				foreach ($value as $pwd) {
-					$password = $pwd;
+				foreach ($value as $attr) {
+					$attrs[] = $attr;					
 				}
 			}
-
-			if (sha1($password_secured) === $password) {
-				$_SESSION['login'] = $login;
+			if (sha1($password_secured) === $attrs[1]) {
+				$_SESSION['id'] = $attrs[0];
+				$_SESSION['login'] = $login;				
 				$tpl = "game";
+			}
+			else
+			{
+				die("Wrong password");
 			}
 			
 		}
