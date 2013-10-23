@@ -3,3 +3,7 @@
 *.psd
 /templates_c
 .DS_Store
+
+// Gruntfile to compile scss to css
+package.json
+Gruntfile.js
