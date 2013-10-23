@@ -4,22 +4,9 @@ body {
 
 *:focus { outline: 0; }
 
-#fps {
-  position: fixed;
-  top: 0;
-  right: 0;
-  background: rgba(#000, 0.5);
-  padding: 10px;
-  color: #fff;
-  font-size: 40px;
-}
-
 canvas {
-  width: 1000px;
   display: none;
-  height: 740px;
-  border: 1px solid #000;
-  margin: auto;
+  position: absolute;
 }
 
 .homepage {
