@@ -7,3 +7,5 @@
 // Gruntfile to compile scss to css
 package.json
 Gruntfile.js
+.sass-cache/
+node_modules/
