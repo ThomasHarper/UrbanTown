@@ -220,8 +220,7 @@
                     elem = gb.cases[client.square];
                     ut.game.proposedObject();
 
-                    twoPac = ut.game.kamehameha(client.square, elem);
-                    //console.log(twoPac);
+                    ut.game.kamehameha(client.square, elem);
                 }
             },
 
@@ -244,8 +243,6 @@
                     //MAGIC !
                     ut.game.kamehameha(squareNo, gb.cases[squareNo]);
                 }
-
-                return elems;
             },
 
             findNext: function (elem, direction, level) {
