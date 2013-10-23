@@ -204,7 +204,7 @@
             },
 
             drop: function (client) {
-                var numSprite, sprite, oneCase;
+                var numSprite, sprite, oneCase, twoPac, elem;
 
                 numSprite = gb.item.numSprite;
                 sprite = gb.sprites[numSprite];
