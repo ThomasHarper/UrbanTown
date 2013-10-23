@@ -87,10 +87,12 @@ canvas {
   .homepage form {
     width: 400px;
     margin: auto; }
+    .homepage form.register {
+      padding-bottom: 60px; }
     .homepage form .register-title {
       font-family: "bebas_neueregular", sans-serif;
       font-size: 36px;
-      margin-bottom: 20px;
+      margin: 40px 0;
       color: #db7743;
       text-align: center; }
     .homepage form label {
@@ -191,27 +193,36 @@ aside {
         -o-border-radius: 40px;
         border-radius: 40px; }
   aside .buttons {
-    margin-top: 100px; }
+    margin-top: 50px; }
     aside .buttons h3 {
       color: #beb8a7;
       font-size: 16px;
       text-transform: uppercase;
       text-align: center;
-      margin-bottom: 40px; }
+      margin-bottom: 30px; }
+    aside .buttons .save-game {
+      background: url(../images/boutons.png) no-repeat;
+      margin: 0 auto 25px;
+      display: block;
+      width: 135px;
+      height: 125px; }
+      aside .buttons .save-game:hover {
+        background-position: 0 -125px; }
     aside .buttons .new-game {
       background: url(../images/boutons.png) no-repeat;
-      margin: 0 auto 50px;
+      background-position: -135px 0;
+      margin: 0 auto 25px;
       display: block;
       width: 135px;
       height: 125px; }
       aside .buttons .new-game:hover {
-        background-position: 0 -125px; }
+        background-position: -135px -125px; }
     aside .buttons .quit-game {
       background: url(../images/boutons.png) no-repeat;
       margin: auto;
-      background-position: -135px 0;
+      background-position: -270px 0;
       display: block;
       width: 135px;
       height: 125px; }
       aside .buttons .quit-game:hover {
-        background-position: -135px -125px; }
+        background-position: -270px -125px; }
