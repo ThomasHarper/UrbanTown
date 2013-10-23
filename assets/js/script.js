@@ -90,9 +90,6 @@
                 //Canvas basic
                 gb.context = gb.$canvas[0].getContext('2d');
 
-                //Store canvas bounding
-                gb.bounding = gb.$canvas[0].getBoundingClientRect();
-
                 //Resize canvas
                 $(window).resize(ut.game.ajust);
                 ut.game.ajust();
@@ -354,11 +351,17 @@
             ajust: function () {
                 var top, left;
 
-                top = (window.innerHeight - gb.gridY * gb.square) / 2;
-                left = (window.innerWidth - (gb.gridX * gb.square + 260)) / 2;
+                top = Math.floor((window.innerHeight - gb.gridY * gb.square) / 2);
+                left = Math.floor((window.innerWidth - (gb.gridX * gb.square + 260)) / 2);
 
                 if (top > 0) { gb.$canvas.css('top', top); }
                 if (left > 0) { gb.$canvas.css('left', left); }
+
+                //Store canvas bounding
+                gb.bounding = {
+                    top: top,
+                    left: left
+                };
             },
 
             loadImages: function () {
