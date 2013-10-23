@@ -37,6 +37,7 @@
             images : [
                 'sprite-dev.png'
             ],
+
             sprites: [
                 {id: 0, images: 0, sx: 0, sy: 0, sw: 100, sh: 100, anim: 0},
                 {id: 1, images: 0, sx: 100, sy: 0, sw: 100, sh: 100, anim: 0},
@@ -92,6 +93,10 @@
                 //Store canvas bounding
                 gb.bounding = gb.$canvas[0].getBoundingClientRect();
 
+                //Resize canvas
+                $(window).resize(ut.game.ajust);
+                ut.game.ajust();
+
                 //jQuery events
                 gb.$canvas.mousemove(ut.game.hover);
                 gb.$canvas.click(ut.game.click);
@@ -102,7 +107,7 @@
                 ut.game.drawMap();
                 ut.game.proposedObject();
 
-                gb.$canvas.show();
+                gb.$canvas.css('display', 'block');
                 //Loop
                 ut.game.loop();
             },
@@ -347,6 +352,16 @@
                 }
 
                 return toReturn;
+            },
+
+            ajust: function () {
+                var top, left;
+
+                top = (window.innerHeight - gb.gridY * gb.square) / 2;
+                left = (window.innerWidth - (gb.gridX * gb.square + 260)) / 2;
+
+                if (top > 0) { gb.$canvas.css('top', top); }
+                if (left > 0) { gb.$canvas.css('left', left); }
             },
 
             loadImages: function () {
