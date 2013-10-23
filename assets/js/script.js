@@ -9,7 +9,7 @@
     (function (ut) {
 
         //-- Object to store "global" var --//
-        var gb, Cases, Client, Player, Game;
+        var gb, Cases, Player, Game;
 
         gb = {
             //jQuery elem
@@ -71,14 +71,10 @@
             this.sol = sol;
             this.texture = texture;
         };
-        Client = function (x, y) {
-            this.x = x;
-            this.y = y;
-        };
         Player = function (name) {
             this.name = name;
         };
-        Game = function (score){
+        Game = function (score) {
             this.score = score;
         };
 
@@ -229,12 +225,10 @@
             },
 
             hover: function (event) {
-                var client = new Client();
-
-                client.x = event.pageX - gb.bounding.left;
-                client.y = event.pageY - gb.bounding.top;
-
-                gb.client = client;
+                gb.client = {
+                    x: event.pageX - gb.bounding.left,
+                    y: event.pageY - gb.bounding.top
+                };
             },
 
             click: function (event) {
