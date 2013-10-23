@@ -38,10 +38,13 @@
                 'sprite-dev.png'
             ],
             sprites: [
-                {images: 0, sx: 0, sy: 0, sw: 100, sh: 100},
-                {images: 0, sx: 100, sy: 0, sw: 100, sh: 100},
-                {images: 0, sx: 200, sy: 0, sw: 100, sh: 100},
-                {images: 0, sx: 300, sy: 0, sw: 100, sh: 100}
+                {id: 0, images: 0, sx: 0, sy: 0, sw: 100, sh: 100, anim: 0},
+                {id: 1, images: 0, sx: 100, sy: 0, sw: 100, sh: 100, anim: 0},
+                {id: 2, images: 0, sx: 200, sy: 0, sw: 100, sh: 100, anim: 0},
+                {id: 3, images: 0, sx: 300, sy: 0, sw: 100, sh: 100, anim: 0},
+                {id: 4, images: 0, sx: 400, sy: 0, sw: 100, sh: 100, anim: 0},
+                {id: 5, images: 0, sx: 500, sy: 0, sw: 100, sh: 100, anim: 0},
+                {id: 6, images: 0, sx: 600, sy: 0, sw: 100, sh: 100, anim: 0}
             ],
 
             props: [
