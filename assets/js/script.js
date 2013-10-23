@@ -243,11 +243,11 @@
             },
 
             findNext: function (elem, direction, level) {
-                var c1, c2, c3, c4, handle = [];
+                var c1, c2, c3, c4, newDirection, handle = [];
 
                 if (direction[0]) {//top
-                    c1 = gb.cases[elem.no - gb.gridX];
 
+                    c1 = gb.cases[elem.no - gb.gridX];
                     if (direction[0] && c1 && c1.texture.id === elem.texture.id) {
                         switch (level) {
                         case 0:
@@ -260,10 +260,11 @@
                         }
                     }
                 }
-                if (direction[1]) {//right
-                    c2 = gb.cases[elem.no + 1];
+                if (direction[1] && elem.no !== 1) {//right
 
-                    if (direction[1] && c2 && c2.texture.id === elem.texture.id) {
+                    c2 = gb.cases[elem.no + 1];
+                    if (c2 && c2.no % gb.gridX !== 0 && direction[1]
+                            && c2.texture.id === elem.texture.id) {
                         switch (level) {
                         case 0:
                             handle.push(c2.no);
@@ -276,8 +277,8 @@
                     }
                 }
                 if (direction[2]) {//bottom
-                    c3 = gb.cases[elem.no + gb.gridX];
 
+                    c3 = gb.cases[elem.no + gb.gridX];
                     if (direction[2] && c3 && c3.texture.id === elem.texture.id) {
                         switch (level) {
                         case 0:
@@ -290,9 +291,11 @@
                         }
                     }
                 }
-                if (direction[3]) {//left
+                if (direction[3] && elem.no !== 0) {//left
+
                     c4 = gb.cases[elem.no - 1];
-                    if (direction[3] && c4 && c4.texture.id === elem.texture.id) {
+                    if (c4 && (c4.no + 1) % gb.gridX !== 0 && direction[3]
+                            && c4.texture.id === elem.texture.id) {
                         switch (level) {
                         case 0:
                             handle.push(c4.no);
