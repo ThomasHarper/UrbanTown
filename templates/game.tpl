@@ -6,7 +6,7 @@
 	</div>
 
 	<div class="score">
-		<span class="info-titre">score</span> <span class="info-score">1 900 100</span>
+		<span class="info-titre">score</span> <span class="info-score"></span>
 		<div class="progress">
 			<span class="inprogress"></span>
 		</div>

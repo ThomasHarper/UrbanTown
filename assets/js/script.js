@@ -32,7 +32,7 @@
             client: {},
             item: {},
             player: {},
-            score: {},
+            score: 0,
 
             // Sprites
             images : [
@@ -51,15 +51,15 @@
             ],
 
             props: [
-                {name: "Tent", score: 0, numSprite: 0, probability: 0.8},
-                {name: "Wooden hunt", score: 0, numSprite: 1, probability: 0.15},
-                {name: "Small house", score: 0, numSprite: 2, probability: 0.05},
-                {name: "House", score: 0, numSprite: 3, probability: 0},
-                {name: "Villa", score: 0, numSprite: 4, probability: 0},
-                {name: "Palace", score: 0, numSprite: 5, probability: 0},
-                {name: "Apartment", score: 0, numSprite: 6, probability: 0},
-                {name: "Building", score: 0, numSprite: 7, probability: 0},
-                {name: "Golden building", score: 0, numSprite: 8, probability: 0}
+                {name: "Tent", score: 5, numSprite: 0, probability: 0.8},
+                {name: "Wooden hunt", score: 20, numSprite: 1, probability: 0.15},
+                {name: "Small house", score: 100, numSprite: 2, probability: 0.05},
+                {name: "House", score: 500, numSprite: 3, probability: 0},
+                {name: "Villa", score: 1500, numSprite: 4, probability: 0},
+                {name: "Palace", score: 5000, numSprite: 5, probability: 0},
+                {name: "Apartment", score: 20000, numSprite: 6, probability: 0},
+                {name: "Building", score: 100000, numSprite: 7, probability: 0},
+                {name: "Golden building", score: 500000, numSprite: 8, probability: 0}
             ]
         };
 
@@ -99,6 +99,7 @@
                 //jQuery events
                 gb.$canvas.mousemove(ut.game.hover);
                 gb.$canvas.click(ut.game.click);
+                $('.info-score').html(0);                
                 
             },
 
@@ -106,6 +107,7 @@
                 //draw map
                 ut.game.drawMap();
                 ut.game.proposedObject();
+                ut.game.getScore();
 
 
                 gb.$canvas.show();
@@ -229,6 +231,8 @@
                     ut.game.proposedObject();
 
                     ut.game.kamehameha(client.square, elem);
+                    ut.game.getScore();
+                    
                 }
             },
 
@@ -321,6 +325,37 @@
 
                 return handle;
             },
+
+            getScore: function () {
+                var state, spriteId = [], scoreTab = [], provisoryScore = 0,i;
+                state = gb.cases;
+                i = state.length - 1;
+                for (i; i >= 0; i--) {
+                    if (state[i].texture.sw) {                        
+                        spriteId.push(state[i].texture.id);                
+                    };
+                };
+
+                i = spriteId.length - 1;
+                if (spriteId != []) {
+                    for (i; i >= 0; i--) {
+                        //console.log(spriteId[i]);
+                        //console.log(i);
+                        scoreTab.push(gb.props[spriteId[i]].score);
+                    };
+                };
+                
+                i = scoreTab.length - 1;
+                if(scoreTab != []) {
+                    for (i; i >= 0; i--) {
+                        provisoryScore += scoreTab[i]; 
+                    };
+                }
+                gb.score = provisoryScore;
+                $('.info-score').html(gb.score);
+            },
+
+            
 
             hover: function (event) {
                 gb.client = {
