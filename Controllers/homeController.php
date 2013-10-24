@@ -79,28 +79,33 @@
 
 	if ($action === "save") 
 	{				
-		$data = $_POST['data'];
-		$query = 'SELECT * FROM `games` WHERE players_id ='.$_SESSION['id'];
+		$data = $_POST['data']; // Data from ajax request
+		
+		// Check if there's a pending game
+		$query = 'SELECT * FROM `games` WHERE players_id ='.$_SESSION['id'].' AND `over` = 1';
 		$result = myFetchAssoc($query);
+
+		// If no pending games, we create a new one
 		if(empty($result))
 		{
-			
-			$query = 'INSERT INTO `games` (`state`,`score`,`players_id`) VALUES ("'.addslashes($data).'", 0, '.$_SESSION['id'].')';
-			myQuery($query);
+			$query = 'INSERT INTO `games` (`state`,`score`,`players_id`, `over`) 
+			VALUES ("'.addslashes($data).'", 0, '.$_SESSION['id'].', 1)';
+			myQuery($query);			
 		}
+		// else we update it
 		else
 		{
-			foreach ($result as $value) {
-				foreach ($value as $attr) {
-					$attrs[] = $attr;					
-				}
-			}
-
-			$query = 'UPDATE `games` SET `state` = "'.addslashes($data).'", `score` = 1 WHERE `players_id` = '.$_SESSION['id'];
+			$query = 'UPDATE `games` SET `state` = "'.addslashes($data).'", `score` = 1 
+			WHERE `players_id` = '.$_SESSION['id'].' AND `over` = 1';
 			myQuery($query);
 		}
-		
 			
+	}
+
+	if ($action === "over") 
+	{
+		$query = 'UPDATE `games` SET `over` = 1 WHERE `players_id` = '.$_SESSION['id'].' AND `over` = 1';
+		myQuery($query);
 	}
 
 
