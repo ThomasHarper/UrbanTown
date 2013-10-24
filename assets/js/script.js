@@ -213,11 +213,11 @@
                 var proposed, random, item;
                 proposed = gb.props.slice(0, 3);
                 random = Math.random();
-                if (random < 0.8) {
+                if (random < 0.95) {
                     item = proposed[0];
-                } else if (random > 0.8 && random < 0.95) {
+                } else if (random > 0.95 && random < 0.98) {
                     item = proposed[1];
-                } else if (random > 0.95 && random <= 1) {
+                } else if (random > 0.98 && random <= 1) {
                     item = proposed[2];
                 }
                 gb.item = item;
