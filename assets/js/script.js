@@ -33,6 +33,7 @@
             item: {},
             player: {},
             score: 0,
+            boat: {},
 
             // Sprites
             images : [
@@ -85,12 +86,6 @@
             this.x = x;
             this.y = y;
             this.texture = texture;
-        };
-        Player = function (name) {
-            this.name = name;
-        };
-        Game = function (score) {
-            this.score = score;
         };
 
         //-- Game loop function --//
@@ -302,7 +297,7 @@
 
                         numSprite = gb.item.numSprite;
                         sprite = gb.sprites[numSprite + 'b'];
-                        way = gb.client.anim > 1 || gb.client.anim < 0.9 ? gb.client.way * -1 : gb.client.way;
+                        way = gb.client.anim > 1 || gb.client.anim <0.9 ? gb.client.way * -1 : gb.client.way;
                         anim = gb.client.anim > 1 || gb.client.anim < 0.9 ? way < 0 ? 0.9 : 1 : gb.client.anim;
 
                         gb.client.anim = anim  - (way * 0.002);
