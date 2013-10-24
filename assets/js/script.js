@@ -243,7 +243,7 @@
             },
 
             findNext: function (elem, direction, level) {
-                var c1, c2, c3, c4, newDirection, handle = [];
+                var c1, c2, c3, c4, handle = [];
 
                 if (direction[0]) {//top
 
@@ -260,7 +260,7 @@
                         }
                     }
                 }
-                if (direction[1] && elem.no !== 1) {//right
+                if (direction[1] && elem.no !== 47) {//right
 
                     c2 = gb.cases[elem.no + 1];
                     if (c2 && c2.no % gb.gridX !== 0 && direction[1]
