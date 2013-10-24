@@ -14,6 +14,14 @@
           animation: $value;
 }
 
+@mixin transition($value) {
+  -webkit-transition: $value;
+     -moz-transition: $value;
+      -ms-transition: $value;
+       -o-transition: $value;
+          transition: $value;
+}
+
 @mixin box-sizing($value) {
   -webkit-box-sizing: $value;
      -moz-box-sizing: $value;
