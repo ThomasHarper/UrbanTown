@@ -114,7 +114,9 @@
                 //draw map
                 ut.game.drawMap();
                 ut.game.proposedObject();
-                ut.game.getScore();
+
+                //Score and Level
+                ut.game.getScore();                            
 
 
                 gb.$canvas.show();
@@ -239,6 +241,7 @@
 
                     ut.game.kamehameha(client.square, elem);
                     ut.game.getScore();
+                    ut.game.getLevel();
                     
                 }
             },
@@ -365,22 +368,27 @@
 
                 if (gb.score >= 0 && gb.score <= 500) {
                     $('.inprogress').css('width', '20' + '%');
+                    $('.level').html(levels[0]);
                     //@TODO .html nom du palier
                 }
                 else if (gb.score > 500 && gb.score <= 1500) {
                     $('.inprogress').css('width', '40' + '%');
+                    $('.level').html(levels[1]);
                     //@TODO .html nom du palier
                 }
                 else if (gb.score > 1500 && gb.score <= 3000) {
                     $('.inprogress').css('width', '60' + '%');
+                    $('.level').html(levels[2]);
                     //@TODO .html nom du palier
                 }
                 else if (gb.score > 3000 && gb.score < 30000) {
                     $('.inprogress').css('width', '80' + '%');
+                    $('.level').html(levels[3]);
                     //@TODO .html nom du palier
                 }
                 else if (gb.score >= 30000) {
                     $('.inprogress').css('width', '100' + '%');
+                    $('.level').html(levels[4]);
                     //@TODO .html nom du palier
                 }
             },
