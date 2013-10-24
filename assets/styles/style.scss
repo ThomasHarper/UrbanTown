@@ -74,13 +74,14 @@ canvas {
 aside {
   position: absolute;
   top: 0;
-  right: -242px;
+  // right: -242px;
+  right: 0;
   bottom: 0;
   width: 260px;
   background-color: #e4dcc6;
-  @include transition(all .4s ease);
+  // @include transition(all .4s ease);
 
-  &:hover { right: 0; }
+  // &:hover { right: 0; }
 
   &:before {
     position: absolute;
@@ -101,17 +102,34 @@ aside {
   }
 
   .score {
-    text-align: center;
+    // text-align: center;
     margin: 40px 0;
 
-    .info-titre {
-      text-transform: uppercase;
-      color: #beb8a7;
-    }
+    .global-detail {
+      @include clearfix;
 
-    .info-score {
-      color: #989486;
-      font-size: 20px;
+      .info-score-group {
+        float: left;
+
+        .info-titre {
+          margin-left: 16px;
+          text-transform: uppercase;
+          color: #beb8a7;
+        }
+
+        .info-score {
+          color: #989486;
+          font-size: 20px;
+        }
+      }
+
+     .level {
+        float: right;
+        text-align: right;
+        margin-top: 3px;
+        margin-right: 16px;
+        color: #beb8a7;
+      }
     }
 
     .progress {
@@ -129,11 +147,6 @@ aside {
         display: block;
         @include border-radius(40px);
       }
-    }
-
-    .level {
-      margin-top: 5px;
-      color: #beb8a7;
     }
   }
 

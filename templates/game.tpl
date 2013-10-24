@@ -6,11 +6,15 @@
 	</div>
 
 	<div class="score">
-		<span class="info-titre">score</span> <span class="info-score"></span>
+		<div class="global-detail">
+			<div class="info-score-group">
+				<span class="info-titre">score</span> <span class="info-score"></span>
+			</div>
+			<div class="level"></div>
+		</div>
 		<div class="progress">
 			<span class="inprogress"></span>
 		</div>
-		<div class="level"></div>
 	</div>
 
 	<div class="buttons">
