@@ -14,6 +14,7 @@
         gb = {
             //jQuery elem
             $canvas: '',
+            $body: '',
 
             //Game
             gridX: 7,
@@ -35,7 +36,8 @@
 
             // Sprites
             images : [
-                'sprite-dev.png'
+                'sprite-dev.png',
+                'sol.png'
             ],
 
             sprites: [
@@ -49,15 +51,15 @@
             ],
 
             props: [
-                {name: "Tent", score: 0, numSprite: 1, probability: 0.8},
-                {name: "Wooden hunt", score: 0, numSprite: 2, probability: 0.15},
-                {name: "Small house", score: 0, numSprite: 3, probability: 0.05},
-                {name: "House", score: 0, numSprite: 0, probability: 0},
-                {name: "Villa", score: 0, numSprite: 0, probability: 0},
-                {name: "Palace", score: 0, numSprite: 0, probability: 0},
-                {name: "Apartment", score: 0, numSprite: 0, probability: 0},
-                {name: "Building", score: 0, numSprite: 0, probability: 0},
-                {name: "Golden building", score: 0, numSprite: 0, probability: 0}
+                {name: "Tent", score: 0, numSprite: 0, probability: 0.8},
+                {name: "Wooden hunt", score: 0, numSprite: 1, probability: 0.15},
+                {name: "Small house", score: 0, numSprite: 2, probability: 0.05},
+                {name: "House", score: 0, numSprite: 3, probability: 0},
+                {name: "Villa", score: 0, numSprite: 4, probability: 0},
+                {name: "Palace", score: 0, numSprite: 5, probability: 0},
+                {name: "Apartment", score: 0, numSprite: 6, probability: 0},
+                {name: "Building", score: 0, numSprite: 7, probability: 0},
+                {name: "Golden building", score: 0, numSprite: 8, probability: 0}
             ]
         };
 
@@ -66,7 +68,6 @@
             this.no = no;
             this.x = x;
             this.y = y;
-            this.sol = sol;
             this.texture = texture;
         };
         Player = function (name) {
@@ -86,6 +87,7 @@
 
                 //Set jQuery globals
                 gb.$canvas = $('canvas:first');
+                gb.$body = $('body');
 
                 //Canvas basic
                 gb.context = gb.$canvas[0].getContext('2d');
@@ -113,28 +115,25 @@
                 var i = (gb.gridX * gb.gridY), row = 0, col = 0,
                     posX, posY, oneCase, sprite, tent, square;
 
+                //set sol
+                gb.context.drawImage(gb.images[1], 0, 0, 700, 700, 0, 0, 700, 700);
+
                 for (i; i > 0; i--) {
                     posX = gb.marginLeft + (gb.square * col);
                     posY = gb.marginTop + (gb.square * row);
                     square = (gb.gridX * gb.gridY) - i;
-
-                    //set sol
-                    sprite = gb.sprites[0];
-                    gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
-                        sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
 
                     //set case object
                     oneCase = new Cases();
                     oneCase.no = square;
                     oneCase.x = posX;
                     oneCase.y = posY;
-                    oneCase.sol = sprite;
                     oneCase.texture = '';
 
                     //set texture
                     tent = Math.random() > 0.92 ? true : false;
                     if (tent) {
-                        sprite = gb.sprites[1];
+                        sprite = gb.sprites[0];
                         gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
                             sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
                         oneCase.texture = sprite;
@@ -153,19 +152,18 @@
 
             //Core function
             loop: function () {
-                var i, oneCase, client, sprite, numSprite, image;
+                var i, oneCase, client, sprite, numSprite, image, anim;
 
                 gb.context.clearRect(0, 0, gb.gridX * gb.square, gb.gridY * gb.square);
-                //ReDraw grid
+                //set sol
+                gb.context.drawImage(gb.images[1], 0, 0, 700, 700, 0, 0, 700, 700);
+
+                //ReDraw texture
                 for (i = gb.gridX * gb.gridY; i > 0; i--) {
 
                     oneCase = gb.cases[i - 1];
-                    sprite = gb.cases[i - 1].sol;
-
-                    gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
-                        sprite.sw, sprite.sh, oneCase.x, oneCase.y, gb.square, gb.square);
-
                     sprite = gb.cases[i - 1].texture;
+
                     if (sprite.sw) {
                         gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
                             sprite.sw, sprite.sh, oneCase.x, oneCase.y, gb.square, gb.square);
@@ -181,8 +179,14 @@
 
                         numSprite = gb.item.numSprite;
                         sprite = gb.sprites[numSprite];
+                        anim = gb.cases[client.square].texture.anim;
+
+                        anim = anim === 1 ? 0 : anim + 0.05;
+                        gb.cases[client.square].texture.anim = anim;
 
                         image = gb.images[sprite.images];
+
+                        gb.context.scale(anim, anim);
                         gb.context.drawImage(image, sprite.sx, sprite.sy,
                             sprite.sw, sprite.sh, gb.cases[client.square].x, gb.cases[client.square].y, gb.square, gb.square);
                     }
@@ -206,7 +210,7 @@
             },
 
             drop: function (client) {
-                var numSprite, sprite, oneCase, twoPac, elem;
+                var numSprite, sprite, oneCase, elem;
 
                 numSprite = gb.item.numSprite;
                 sprite = gb.sprites[numSprite];
@@ -357,8 +361,13 @@
                 top = Math.floor((window.innerHeight - gb.gridY * gb.square) / 2);
                 left = Math.floor((window.innerWidth - (gb.gridX * gb.square + 260)) / 2);
 
-                if (top > 0) { gb.$canvas.css('top', top); }
-                if (left > 0) { gb.$canvas.css('left', left); }
+                if (top > 0) { gb.$canvas.css('top', top + 'px'); }
+                if (left > 0) { gb.$canvas.css('left', left + 'px'); }
+
+                if (top < 0) { top = 0; }
+                if (left < 0) { left = 0; }
+                gb.$body.css('background-position', (left - 150) + 'px ' + (top - 150) + 'px ');
+
 
                 //Store canvas bounding
                 gb.bounding = {
