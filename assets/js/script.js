@@ -103,6 +103,7 @@
                 //jQuery events
                 gb.$canvas.mousemove(ut.game.hover);
                 gb.$canvas.click(ut.game.click);
+                
             },
 
             launch: function () {
@@ -111,6 +112,9 @@
                 ut.game.proposedObject();
 
                 gb.$canvas.show();
+                $('.save-game').click(function (){
+                    ut.request.save(gb.cases);
+                });     
                 //Loop
                 ut.game.loop();
 
@@ -292,6 +296,20 @@
                 if (gb.load === length) {
                     ut.game.launch();
                 }
+            }
+        };
+
+        ut.request = {
+            save: function (data) {                
+                $.ajax({
+                    url: 'index.php?action=save',
+                    type: "POST",
+                    data: {data: JSON.stringify(data)},
+                    dataType: 'json',
+                    success: function () {
+                        alert('Partie sauvegardee');
+                    }
+                });
             }
         };
 
