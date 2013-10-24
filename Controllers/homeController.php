@@ -77,4 +77,30 @@
 		}
 	}
 
+	if ($action === "save") 
+	{				
+		$data = $_POST['data'];
+		$query = 'SELECT * FROM `games` WHERE players_id ='.$_SESSION['id'];
+		$result = myFetchAssoc($query);
+		if(empty($result))
+		{
+			
+			$query = 'INSERT INTO `games` (`state`,`score`,`players_id`) VALUES ("'.addslashes($data).'", 0, '.$_SESSION['id'].')';
+			myQuery($query);
+		}
+		else
+		{
+			foreach ($result as $value) {
+				foreach ($value as $attr) {
+					$attrs[] = $attr;					
+				}
+			}
+
+			$query = 'UPDATE `games` SET `state` = "'.addslashes($data).'", `score` = 1 WHERE `players_id` = '.$_SESSION['id'];
+			myQuery($query);
+		}
+		
+			
+	}
+
 ?>
