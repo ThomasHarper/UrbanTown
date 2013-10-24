@@ -1,4 +1,4 @@
-<canvas id="game" width="700" height="700"></canvas>
+<canvas id="game" width="950" height="700"></canvas>
 
 <aside>
 	<div class="nom">
