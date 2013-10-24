@@ -155,22 +155,112 @@
                     posX = gb.marginLeft + (gb.square * col);
                     posY = gb.marginTop + (gb.square * row);
                     square = (gb.gridX * gb.gridY) - i;
+                    sprite = '';
+
+                    switch (i - 1) {
+                    case 2:
+                        sprite = gb.sprites[0];
+                        gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                            sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
+                        break;
+
+                    case 4:
+                        sprite = gb.sprites[11];
+                        gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                            sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
+                        break;
+
+                    case 5:
+                        sprite = gb.sprites[1];
+                        gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                            sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
+                        break;
+
+                    case 9:
+                        sprite = gb.sprites[2];
+                        gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                            sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
+                        break;
+
+                    case 13:
+                        sprite = gb.sprites[12];
+                        gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                            sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
+                        break;
+
+                    case 27:
+                        sprite = gb.sprites[0];
+                        gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                            sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
+                        break;
+
+                    case 28:
+                        sprite = gb.sprites[0];
+                        gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                            sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
+                        break;
+
+                    case 29:
+                        sprite = gb.sprites[7];
+                        gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                            sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
+                        break;
+
+                    case 34:
+                        sprite = gb.sprites[2];
+                        gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                            sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
+                        break;
+
+                    case 35:
+                        sprite = gb.sprites[0];
+                        gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                            sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
+                        break;
+
+                    case 36:
+                        sprite = gb.sprites[1];
+                        gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                            sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
+                        break;
+
+                    case 38:
+                        sprite = gb.sprites[0];
+                        gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                            sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
+                        break;
+
+                    case 41:
+                        sprite = gb.sprites[2];
+                        gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                            sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
+                        break;
+
+                    case 44:
+                        sprite = gb.sprites[11];
+                        gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                            sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
+                        break;
+
+                    case 45:
+                        sprite = gb.sprites[3];
+                        gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                            sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
+                        break;
+
+                    case 46:
+                        sprite = gb.sprites[0];
+                        gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                            sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
+                        break;
+                    }
 
                     //set case object
                     oneCase = new Cases();
                     oneCase.no = square;
                     oneCase.x = posX;
                     oneCase.y = posY;
-                    oneCase.texture = '';
-
-                    //set texture
-                    tent = Math.random() > 0.92 ? true : false;
-                    if (tent) {
-                        sprite = gb.sprites[0];
-                        gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
-                            sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
-                        oneCase.texture = sprite;
-                    }
+                    oneCase.texture = sprite && sprite.sw ? sprite : '';
 
                     //stock case
                     gb.cases[square] = oneCase;
@@ -232,6 +322,7 @@
                 var proposed, random, item;
                 proposed = gb.props.slice(0, 3);
                 random = Math.random();
+
                 if (random < 0.95) {
                     item = proposed[0];
                 } else if (random > 0.95 && random < 0.98) {
@@ -265,6 +356,8 @@
             kamehameha: function (squareNo, elem) {
                 var elems, length;
 
+                if (gb.cases[squareNo].texture.id === 6 || gb.cases[squareNo].texture.id > 8) { return; }
+
                 //on recupere les 4 elements autour de la case clique
                 elems = ut.game.findNext(elem, [true, true, true, true], 0);
 
@@ -277,6 +370,7 @@
                     }
                     //on draw une nouvelle texture sur la case
                     gb.cases[squareNo].texture = gb.sprites[gb.cases[squareNo].texture.id + 1];
+
                     //MAGIC !
                     ut.game.kamehameha(squareNo, gb.cases[squareNo]);
                 }
@@ -494,7 +588,7 @@
 
 
         ut.request = {
-            save: function (data) {                
+            save: function (data) {
                 $.ajax({
                     url: 'index.php?action=save',
                     type: "POST",
