@@ -1,25 +1,13 @@
 body {
   font-family: "MuseoSans-500", arial, sans-serif;
+  background: url('../images/floor.png') no-repeat center center #5cbecf;
 }
 
 *:focus { outline: 0; }
 
-#fps {
-  position: fixed;
-  top: 0;
-  right: 0;
-  background: rgba(#000, 0.5);
-  padding: 10px;
-  color: #fff;
-  font-size: 40px;
-}
-
 canvas {
-  width: 1000px;
   display: none;
-  height: 740px;
-  border: 1px solid #000;
-  margin: auto;
+  position: absolute;
 }
 
 .homepage {
@@ -34,10 +22,12 @@ canvas {
     width: 400px;
     margin: auto;
 
+    &.register { padding-bottom: 60px; }
+
     .register-title {
       font-family: "bebas_neueregular", sans-serif;
       font-size: 36px;
-      margin-bottom: 20px;
+      margin: 40px 0;
       color: #db7743;
       text-align: center;
     }
@@ -58,6 +48,8 @@ canvas {
       padding-left: 10px;
       @include border-radius(2px);
       @include box-sizing(border-box);
+
+      &:focus { border-color: darken(#beb8a7, 15%); }
     }
 
     input[type="submit"] {
@@ -87,6 +79,12 @@ aside {
   width: 260px;
   background-color: #e4dcc6;
 
+  &:before {
+    position: absolute;
+    content: url(../images/sidebar-before.png);
+    margin-left: -11px;
+  }
+
   .nom {
     background: url(../images/bg-nom.png) no-repeat;
     width: 226px;
@@ -100,27 +98,51 @@ aside {
   }
 
   .score {
-     .progress {
+    text-align: center;
+    margin: 40px 0;
+
+    .info-titre {
+      text-transform: uppercase;
+      color: #beb8a7;
+    }
+
+    .info-score {
+      color: #989486;
+      font-size: 20px;
+    }
+
+    .progress {
       width: 86%;
-      height: 10px;
-      margin: auto;
+      height: 6px;
+      margin: 5px auto 0;
       background-color: #f9f6e9;
       @include border-radius(40px);
+      border: 2px solid #f9f6e9;
+
+      .inprogress {
+        background-color: #db7743;
+        width: 60px;
+        height: 100%;
+        display: block;
+        @include border-radius(40px);
+      }
     }
   }
 
   .buttons {
+    margin-top: 50px;
+
     h3 {
       color: #beb8a7;
       font-size: 16px;
       text-transform: uppercase;
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
     }
 
-    .new-game {
+    .save-game {
       background: url(../images/boutons.png) no-repeat;
-      margin: 0 auto 50px;
+      margin: 0 auto 25px;
       display: block;
       width: 135px;
       height: 125px;
@@ -128,15 +150,26 @@ aside {
       &:hover { background-position: 0 -125px; }
     }
 
-    .quit-game {
+    .new-game {
       background: url(../images/boutons.png) no-repeat;
-      margin: auto;
       background-position: -135px 0;
+      margin: 0 auto 25px;
       display: block;
       width: 135px;
       height: 125px;
 
       &:hover { background-position: -135px -125px; }
+    }
+
+    .quit-game {
+      background: url(../images/boutons.png) no-repeat;
+      margin: auto;
+      background-position: -270px 0;
+      display: block;
+      width: 135px;
+      height: 125px;
+
+      &:hover { background-position: -270px -125px; }
     }
   }
 }

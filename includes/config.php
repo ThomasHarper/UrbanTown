@@ -12,7 +12,8 @@ $config['routes'] = array(
     "home"	=> "home",
     "signup" => "home",
     "signin" => "home",
-    "save" => "home"
+    "save" => "home",
+    "fuckThisShit" => "home"
 );
 
 //Mode Debugg

@@ -9,18 +9,19 @@
     (function (ut) {
 
         //-- Object to store "global" var --//
-        var gb, Cases, Client, Player, Game;
+        var gb, Cases, Player, Game;
 
         gb = {
             //jQuery elem
             $canvas: '',
+            $body: '',
 
             //Game
             gridX: 7,
             gridY: 7,
             square: 100,
-            marginTop: 20,
-            marginLeft: 20,
+            marginTop: 0,
+            marginLeft: 0,
             imgPath: './assets/images/',
             load: 0,
 
@@ -35,32 +36,31 @@
 
             // Sprites
             images : [
-                'sprite-dev.png'
+                'sprite-dev.png',
+                'sol.png'
             ],
+
             sprites: [
-                {images: 0, sx: 0, sy: 0, sw: 100, sh: 100},
-                {images: 0, sx: 100, sy: 0, sw: 100, sh: 100},
-                {images: 0, sx: 200, sy: 0, sw: 100, sh: 100},
-                {images: 0, sx: 300, sy: 0, sw: 100, sh: 100}
+                {id: 0, images: 0, sx: 0, sy: 0, sw: 100, sh: 100, anim: 0},
+                {id: 1, images: 0, sx: 100, sy: 0, sw: 100, sh: 100, anim: 0},
+                {id: 2, images: 0, sx: 200, sy: 0, sw: 100, sh: 100, anim: 0},
+                {id: 3, images: 0, sx: 300, sy: 0, sw: 100, sh: 100, anim: 0},
+                {id: 4, images: 0, sx: 400, sy: 0, sw: 100, sh: 100, anim: 0},
+                {id: 5, images: 0, sx: 500, sy: 0, sw: 100, sh: 100, anim: 0},
+                {id: 6, images: 0, sx: 600, sy: 0, sw: 100, sh: 100, anim: 0}
             ],
 
             props: [
-                {name: "Tent", score: 0, numSprite: 1, probability: 0.8},
-                {name: "Wooden hunt", score: 0, numSprite: 2, probability: 0.15},
-                {name: "Small house", score: 0, numSprite: 3, probability: 0.05},
-                {name: "House", score: 0, numSprite: 0, probability: 0},
-                {name: "Villa", score: 0, numSprite: 0, probability: 0},
-                {name: "Palace", score: 0, numSprite: 0, probability: 0},
-                {name: "Apartment", score: 0, numSprite: 0, probability: 0},
-                {name: "Building", score: 0, numSprite: 0, probability: 0},
-                {name: "Golden building", score: 0, numSprite: 0, probability: 0}
-            ],
-
-            //FPS
-            timeInterval: 0,
-            lastTime: 0,
-            frame: 0,
-            avgFps: 0
+                {name: "Tent", score: 0, numSprite: 0, probability: 0.8},
+                {name: "Wooden hunt", score: 0, numSprite: 1, probability: 0.15},
+                {name: "Small house", score: 0, numSprite: 2, probability: 0.05},
+                {name: "House", score: 0, numSprite: 3, probability: 0},
+                {name: "Villa", score: 0, numSprite: 4, probability: 0},
+                {name: "Palace", score: 0, numSprite: 5, probability: 0},
+                {name: "Apartment", score: 0, numSprite: 6, probability: 0},
+                {name: "Building", score: 0, numSprite: 7, probability: 0},
+                {name: "Golden building", score: 0, numSprite: 8, probability: 0}
+            ]
         };
 
         //-- Object to store game entities --//
@@ -68,17 +68,12 @@
             this.no = no;
             this.x = x;
             this.y = y;
-            this.sol = sol;
             this.texture = texture;
-        };
-        Client = function (x, y) {
-            this.x = x;
-            this.y = y;
         };
         Player = function (name) {
             this.name = name;
         };
-        Game = function (score){
+        Game = function (score) {
             this.score = score;
         };
 
@@ -92,13 +87,14 @@
 
                 //Set jQuery globals
                 gb.$canvas = $('canvas:first');
-                gb.$fps = $('#fps').find('span');
+                gb.$body = $('body');
 
                 //Canvas basic
                 gb.context = gb.$canvas[0].getContext('2d');
 
-                //Store canvas bounding
-                gb.bounding = gb.$canvas[0].getBoundingClientRect();
+                //Resize canvas
+                $(window).resize(ut.game.ajust);
+                ut.game.ajust();
 
                 //jQuery events
                 gb.$canvas.mousemove(ut.game.hover);
@@ -111,42 +107,40 @@
                 ut.game.drawMap();
                 ut.game.proposedObject();
 
+
                 gb.$canvas.show();
                 $('.save-game').click(function (){
                     ut.request.save(gb.cases);
                 });     
+
+                gb.$canvas.css('display', 'block');
                 //Loop
                 ut.game.loop();
-
-                console.log(gb.cases);
             },
 
             drawMap: function () {
                 var i = (gb.gridX * gb.gridY), row = 0, col = 0,
                     posX, posY, oneCase, sprite, tent, square;
 
+                //set sol
+                gb.context.drawImage(gb.images[1], 0, 0, 700, 700, 0, 0, 700, 700);
+
                 for (i; i > 0; i--) {
                     posX = gb.marginLeft + (gb.square * col);
                     posY = gb.marginTop + (gb.square * row);
                     square = (gb.gridX * gb.gridY) - i;
-
-                    //set sol
-                    sprite = gb.sprites[0];
-                    gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
-                        sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
 
                     //set case object
                     oneCase = new Cases();
                     oneCase.no = square;
                     oneCase.x = posX;
                     oneCase.y = posY;
-                    oneCase.sol = sprite;
                     oneCase.texture = '';
 
                     //set texture
                     tent = Math.random() > 0.92 ? true : false;
                     if (tent) {
-                        sprite = gb.sprites[1];
+                        sprite = gb.sprites[0];
                         gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
                             sprite.sw, sprite.sh, posX, posY, gb.square, gb.square);
                         oneCase.texture = sprite;
@@ -165,18 +159,18 @@
 
             //Core function
             loop: function () {
-                var i, oneCase, client, sprite, numSprite, image;
+                var i, oneCase, client, sprite, numSprite, image, anim;
 
-                //ReDraw grid
+                gb.context.clearRect(0, 0, gb.gridX * gb.square, gb.gridY * gb.square);
+                //set sol
+                gb.context.drawImage(gb.images[1], 0, 0, 700, 700, 0, 0, 700, 700);
+
+                //ReDraw texture
                 for (i = gb.gridX * gb.gridY; i > 0; i--) {
 
                     oneCase = gb.cases[i - 1];
-                    sprite = gb.cases[i - 1].sol;
-
-                    gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
-                        sprite.sw, sprite.sh, oneCase.x, oneCase.y, gb.square, gb.square);
-
                     sprite = gb.cases[i - 1].texture;
+
                     if (sprite.sw) {
                         gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
                             sprite.sw, sprite.sh, oneCase.x, oneCase.y, gb.square, gb.square);
@@ -192,15 +186,18 @@
 
                         numSprite = gb.item.numSprite;
                         sprite = gb.sprites[numSprite];
+                        anim = gb.cases[client.square].texture.anim;
+
+                        anim = anim === 1 ? 0 : anim + 0.05;
+                        gb.cases[client.square].texture.anim = anim;
 
                         image = gb.images[sprite.images];
+
+                        gb.context.scale(anim, anim);
                         gb.context.drawImage(image, sprite.sx, sprite.sy,
                             sprite.sw, sprite.sh, gb.cases[client.square].x, gb.cases[client.square].y, gb.square, gb.square);
                     }
                 }
-
-                //FPS
-                gb.$fps.html(ut.fps.get());
 
                 requestAnimationFrame(ut.game.loop);
             },
@@ -220,7 +217,7 @@
             },
 
             drop: function (client) {
-                var numSprite, sprite, oneCase;
+                var numSprite, sprite, oneCase, elem;
 
                 numSprite = gb.item.numSprite;
                 sprite = gb.sprites[numSprite];
@@ -228,17 +225,108 @@
                 oneCase = gb.cases[client.square];
                 if (!oneCase.texture.sw) {
                     gb.cases[client.square].texture = sprite;
+                    elem = gb.cases[client.square];
                     ut.game.proposedObject();
+
+                    ut.game.kamehameha(client.square, elem);
                 }
             },
 
+            //THE EPICEST FUNCTIONS EVER
+            kamehameha: function (squareNo, elem) {
+                var elems, length;
+
+                //on recupere les 4 elements autour de la case clique
+                elems = ut.game.findNext(elem, [true, true, true, true], 0);
+
+                length = elems.length;
+
+                if (length >= 2) {
+                    for (length; length > 0; length--) {
+                        //si on a + 2 elem autour on erase
+                        gb.cases[elems[length - 1]].texture = '';
+                    }
+                    //on draw une nouvelle texture sur la case
+                    gb.cases[squareNo].texture = gb.sprites[gb.cases[squareNo].texture.id + 1];
+                    //MAGIC !
+                    ut.game.kamehameha(squareNo, gb.cases[squareNo]);
+                }
+            },
+
+            findNext: function (elem, direction, level) {
+                var c1, c2, c3, c4, handle = [];
+
+                if (direction[0]) {//top
+
+                    c1 = gb.cases[elem.no - gb.gridX];
+                    if (direction[0] && c1 && c1.texture.id === elem.texture.id) {
+                        switch (level) {
+                        case 0:
+                            handle.push(c1.no);
+                            handle = handle.concat(ut.game.findNext(c1, [true, true, false, true], 1));
+                            break;
+                        case 1:
+                            handle.push(c1.no);
+                            break;
+                        }
+                    }
+                }
+                if (direction[1] && elem.no !== 47) {//right
+
+                    c2 = gb.cases[elem.no + 1];
+                    if (c2 && c2.no % gb.gridX !== 0 && direction[1]
+                            && c2.texture.id === elem.texture.id) {
+                        switch (level) {
+                        case 0:
+                            handle.push(c2.no);
+                            handle = handle.concat(ut.game.findNext(c2, [true, true, true, false], 1));
+                            break;
+                        case 1:
+                            handle.push(c2.no);
+                            break;
+                        }
+                    }
+                }
+                if (direction[2]) {//bottom
+
+                    c3 = gb.cases[elem.no + gb.gridX];
+                    if (direction[2] && c3 && c3.texture.id === elem.texture.id) {
+                        switch (level) {
+                        case 0:
+                            handle.push(c3.no);
+                            handle = handle.concat(ut.game.findNext(c3, [false, true, true, true], 1));
+                            break;
+                        case 1:
+                            handle.push(c3.no);
+                            break;
+                        }
+                    }
+                }
+                if (direction[3] && elem.no !== 0) {//left
+
+                    c4 = gb.cases[elem.no - 1];
+                    if (c4 && (c4.no + 1) % gb.gridX !== 0 && direction[3]
+                            && c4.texture.id === elem.texture.id) {
+                        switch (level) {
+                        case 0:
+                            handle.push(c4.no);
+                            handle = handle.concat(ut.game.findNext(c4, [true, false, true, true], 1));
+                            break;
+                        case 1:
+                            handle.push(c4.no);
+                            break;
+                        }
+                    }
+                }
+
+                return handle;
+            },
+
             hover: function (event) {
-                var client = new Client();
-
-                client.x = event.pageX - gb.bounding.left;
-                client.y = event.pageY - gb.bounding.top;
-
-                gb.client = client;
+                gb.client = {
+                    x: event.pageX - gb.bounding.left,
+                    y: event.pageY - gb.bounding.top
+                };
             },
 
             click: function (event) {
@@ -274,6 +362,27 @@
                 return toReturn;
             },
 
+            ajust: function () {
+                var top, left;
+
+                top = Math.floor((window.innerHeight - gb.gridY * gb.square) / 2);
+                left = Math.floor((window.innerWidth - (gb.gridX * gb.square + 260)) / 2);
+
+                if (top > 0) { gb.$canvas.css('top', top + 'px'); }
+                if (left > 0) { gb.$canvas.css('left', left + 'px'); }
+
+                if (top < 0) { top = 0; }
+                if (left < 0) { left = 0; }
+                gb.$body.css('background-position', (left - 150) + 'px ' + (top - 150) + 'px ');
+
+
+                //Store canvas bounding
+                gb.bounding = {
+                    top: top,
+                    left: left
+                };
+            },
+
             loadImages: function () {
                 var length, img;
 
@@ -298,6 +407,7 @@
                 }
             }
         };
+
 
         ut.request = {
             save: function (data) {                
@@ -324,10 +434,10 @@
                 if (gb.frame % 10 === 0) {
                     gb.avgFps = Math.round(gb.timeInterval * 10) / 10;
                 }
-
-                return gb.avgFps.toFixed(0);
             }
+
         };
+
     }(ut));
 
     //-- CALL --//

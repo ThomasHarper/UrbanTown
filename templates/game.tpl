@@ -1,5 +1,4 @@
-<div id="fps">Fps: <span>60</span></div>
-<canvas id="game" width="1000" height="740"></canvas>
+<canvas id="game" width="700" height="700"></canvas>
 
 <aside>
 	<div class="nom">
@@ -7,13 +6,17 @@
 	</div>
 
 	<div class="score">
-		score 1 900 100
-		<div class="progress"></div>
+		<span class="info-titre">score</span> <span class="info-score">1 900 100</span>
+		<div class="progress">
+			<span class="inprogress"></span>
+		</div>
 	</div>
 
 	<div class="buttons">
 		<h3>Menu du jeu</h3>
-		<a href="" class="new-game"></a>
-		<a href="" class="quit-game"></a>
+
+		<span class="save-game"></span>
+		<span class="new-game"></span>
+		<span class="quit-game"></span>
 	</div>
 </aside>
