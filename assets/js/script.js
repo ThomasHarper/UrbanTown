@@ -330,10 +330,8 @@
             },
 
             hover: function (event) {
-                gb.client = {
-                    x: event.pageX - gb.bounding.left,
-                    y: event.pageY - gb.bounding.top
-                };
+                gb.client.x = event.pageX - gb.bounding.left;
+                gb.client.y = event.pageY - gb.bounding.top;
             },
 
             click: function (event) {
