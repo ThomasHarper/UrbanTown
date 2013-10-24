@@ -36,21 +36,34 @@
 
             // Sprites
             images : [
-                'sprite-dev.png',
-                'sol.png'
+                'sprite-item.png',
+                'sol.png',
+                'bateau.png',
+                'eau_bateau.png'
             ],
 
             sprites: {
-                0: {id: 0, images: 0, sx: 0, sy: 0, sw: 100, sh: 100, anim: 0},
-                1: {id: 1, images: 0, sx: 100, sy: 0, sw: 100, sh: 100, anim: 0},
-                2: {id: 2, images: 0, sx: 200, sy: 0, sw: 100, sh: 100, anim: 0},
-                3: {id: 3, images: 0, sx: 300, sy: 0, sw: 100, sh: 100, anim: 0},
-                4: {id: 4, images: 0, sx: 400, sy: 0, sw: 100, sh: 100, anim: 0},
-                5: {id: 5, images: 0, sx: 500, sy: 0, sw: 100, sh: 100, anim: 0},
-                6: {id: 6, images: 0, sx: 600, sy: 0, sw: 100, sh: 100, anim: 0},
-                '0b': {id: 100, images: 0, sx: 0, sy: 100, sw: 100, sh: 100, anim: 0},
-                '1b': {id: 101, images: 0, sx: 100, sy: 100, sw: 100, sh: 100, anim: 0},
-                '2b': {id: 102, images: 0, sx: 200, sy: 100, sw: 100, sh: 100, anim: 0}
+                0: {id: 0, images: 0, sx: 0, sy: 0, sw: 100, sh: 100, anim: 0},//tente
+                1: {id: 1, images: 0, sx: 100, sy: 0, sw: 100, sh: 100, anim: 0},//cabane
+                2: {id: 2, images: 0, sx: 200, sy: 0, sw: 100, sh: 100, anim: 0},//petite-maison
+                3: {id: 3, images: 0, sx: 300, sy: 0, sw: 100, sh: 100, anim: 0},//grande-maison
+                4: {id: 4, images: 0, sx: 400, sy: 0, sw: 100, sh: 100, anim: 0},//apartement
+                5: {id: 5, images: 0, sx: 500, sy: 0, sw: 100, sh: 100, anim: 0},//building
+                6: {id: 6, images: 0, sx: 600, sy: 0, sw: 100, sh: 100, anim: 0},//Gold Building
+
+                '0b': {id: 100, images: 0, sx: 0, sy: 100, sw: 100, sh: 100, anim: 0},//tente bordure
+                '1b': {id: 101, images: 0, sx: 100, sy: 100, sw: 100, sh: 100, anim: 0},//cabane bordure
+                '2b': {id: 102, images: 0, sx: 200, sy: 100, sw: 100, sh: 100, anim: 0},//petite bordure
+
+                7: {id: 7, images: 0, sx: 0, sy: 200, sw: 100, sh: 100, anim: 0},//tour violette
+                8: {id: 8, images: 0, sx: 100, sy: 200, sw: 100, sh: 100, anim: 0},//tour verte
+                9: {id: 9, images: 0, sx: 200, sy: 200, sw: 100, sh: 100, anim: 0},//coffre
+
+                10: {id: 10, images: 0, sx: 0, sy: 300, sw: 100, sh: 100, anim: 0},//marteau
+                11: {id: 11, images: 0, sx: 100, sy: 300, sw: 100, sh: 100, anim: 0},//pierre
+
+                12: {id: 12, images: 0, sx: 100, sy: 400, sw: 100, sh: 100, anim: 0},//godzilla
+                '12b': {id: 112, images: 0, sx: 0, sy: 400, sw: 100, sh: 100, anim: 0}//godzilla bordure
             },
 
             props: [
@@ -102,8 +115,10 @@
                 //jQuery events
                 gb.$canvas.mousemove(ut.game.hover);
                 gb.$canvas.click(ut.game.click);
+
                 $('.info-score').html(0);                
                 
+
             },
 
             launch: function () {
@@ -120,9 +135,9 @@
 
 
                 gb.$canvas.show();
-                $('.save-game').click(function (){
+                $('.save-game').click(function () {
                     ut.request.save(gb.cases);
-                });     
+                });
 
                 gb.$canvas.css('display', 'block');
                 //Loop
@@ -131,7 +146,7 @@
 
             drawMap: function () {
                 var i = (gb.gridX * gb.gridY), row = 0, col = 0,
-                    posX, posY, oneCase, sprite, tent, square;
+                    posX, posY, oneCase, sprite, square;
 
                 //set sol
                 gb.context.drawImage(gb.images[1], 0, 0, 700, 700, 0, 0, 700, 700);
