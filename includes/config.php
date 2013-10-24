@@ -11,7 +11,8 @@ $config['bdd']['base'] = "game";
 $config['routes'] = array(
     "home"	=> "home",
     "signup" => "home",
-    "signin" => "home"
+    "signin" => "home",
+    "save" => "home"
 );
 
 //Mode Debugg
