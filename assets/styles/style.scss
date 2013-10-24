@@ -130,6 +130,11 @@ aside {
         @include border-radius(40px);
       }
     }
+
+    .level {
+      margin-top: 5px;
+      color: #beb8a7;
+    }
   }
 
   .buttons {
