@@ -278,7 +278,7 @@
                         }
                     }
                 }
-                if (direction[1] && elem.no !== 47) {//right
+                if (direction[1] && elem.no !== 48) {//right
 
                     c2 = gb.cases[elem.no + 1];
                     if (c2 && c2.no % gb.gridX !== 0 && direction[1]
