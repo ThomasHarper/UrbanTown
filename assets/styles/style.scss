@@ -74,10 +74,13 @@ canvas {
 aside {
   position: absolute;
   top: 0;
-  right: 0;
+  right: -242px;
   bottom: 0;
   width: 260px;
   background-color: #e4dcc6;
+  @include transition(all .4s ease);
+
+  &:hover { right: 0; }
 
   &:before {
     position: absolute;
@@ -146,6 +149,7 @@ aside {
       display: block;
       width: 135px;
       height: 125px;
+      cursor: pointer;
 
       &:hover { background-position: 0 -125px; }
     }
@@ -157,6 +161,7 @@ aside {
       display: block;
       width: 135px;
       height: 125px;
+      cursor: pointer;
 
       &:hover { background-position: -135px -125px; }
     }
@@ -168,6 +173,7 @@ aside {
       display: block;
       width: 135px;
       height: 125px;
+      cursor: pointer;
 
       &:hover { background-position: -270px -125px; }
     }
