@@ -10,6 +10,7 @@
 		<div class="progress">
 			<span class="inprogress"></span>
 		</div>
+		<div class="level"></div>
 	</div>
 
 	<div class="buttons">
