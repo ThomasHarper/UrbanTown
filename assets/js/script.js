@@ -146,6 +146,12 @@
                 //set sol
                 gb.context.drawImage(gb.images[1], 0, 0, 700, 700, 0, 0, 700, 700);
 
+                //set Boat
+                gb.context.drawImage(gb.images[3], 790, 230);
+                gb.context.drawImage(gb.images[2], 800, 250);
+                gb.boat.anim = 0;
+                gb.boat.way = 1;
+
                 for (i; i > 0; i--) {
                     posX = gb.marginLeft + (gb.square * col);
                     posY = gb.marginTop + (gb.square * row);
@@ -272,9 +278,19 @@
             loop: function () {
                 var i, oneCase, client, sprite, numSprite, image, anim, way, center;
 
-                gb.context.clearRect(0, 0, gb.gridX * gb.square, gb.gridY * gb.square);
+                gb.context.clearRect(0, 0, gb.gridX * gb.square + 250, gb.gridY * gb.square);
                 //set sol
                 gb.context.drawImage(gb.images[1], 0, 0, 700, 700, 0, 0, 700, 700);
+
+                //set Boat
+                way = gb.boat.anim > 1 || gb.boat.anim < -1 ? gb.boat.way * -1 : gb.boat.way;
+                anim = gb.boat.anim > 1 || gb.boat.anim < -1 ? -1 : gb.boat.anim;
+
+                gb.context.drawImage(gb.images[3], 790 + (way * (anim + 0.02)), 230);
+                gb.boat.anim = anim + 0.02;
+                gb.boat.way = way;
+                way = -1 * way;
+                gb.context.drawImage(gb.images[2], 800 + (way * (anim + 0.02)), 250);
 
                 //ReDraw texture
                 for (i = gb.gridX * gb.gridY; i > 0; i--) {
@@ -304,9 +320,9 @@
                         gb.client.way = way;
                         image = gb.images[sprite.images];
                         center = (gb.square - (gb.square * anim)) / 2;
-
+                        client = gb.cases[client.square];
                         gb.context.drawImage(image, sprite.sx, sprite.sy, sprite.sw, sprite.sh,
-                            gb.cases[client.square].x + center, gb.cases[client.square].y + center, gb.square * anim, gb.square * anim);
+                            client.x + center, client.y + center, gb.square * anim, gb.square * anim);
                     }
                 }
 
@@ -539,7 +555,7 @@
                 var top, left;
 
                 top = Math.floor((window.innerHeight - gb.gridY * gb.square) / 2);
-                left = Math.floor((window.innerWidth - (gb.gridX * gb.square + 260)) / 2);
+                left = Math.floor((window.innerWidth - (gb.gridX * gb.square + 500)) / 2);
 
                 if (top > 0) { gb.$canvas.css('top', top + 'px'); }
                 if (left > 0) { gb.$canvas.css('left', left + 'px'); }
