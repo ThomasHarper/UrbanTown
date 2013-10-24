@@ -40,15 +40,18 @@
                 'sol.png'
             ],
 
-            sprites: [
-                {id: 0, images: 0, sx: 0, sy: 0, sw: 100, sh: 100, anim: 0},
-                {id: 1, images: 0, sx: 100, sy: 0, sw: 100, sh: 100, anim: 0},
-                {id: 2, images: 0, sx: 200, sy: 0, sw: 100, sh: 100, anim: 0},
-                {id: 3, images: 0, sx: 300, sy: 0, sw: 100, sh: 100, anim: 0},
-                {id: 4, images: 0, sx: 400, sy: 0, sw: 100, sh: 100, anim: 0},
-                {id: 5, images: 0, sx: 500, sy: 0, sw: 100, sh: 100, anim: 0},
-                {id: 6, images: 0, sx: 600, sy: 0, sw: 100, sh: 100, anim: 0}
-            ],
+            sprites: {
+                0: {id: 0, images: 0, sx: 0, sy: 0, sw: 100, sh: 100, anim: 0},
+                1: {id: 1, images: 0, sx: 100, sy: 0, sw: 100, sh: 100, anim: 0},
+                2: {id: 2, images: 0, sx: 200, sy: 0, sw: 100, sh: 100, anim: 0},
+                3: {id: 3, images: 0, sx: 300, sy: 0, sw: 100, sh: 100, anim: 0},
+                4: {id: 4, images: 0, sx: 400, sy: 0, sw: 100, sh: 100, anim: 0},
+                5: {id: 5, images: 0, sx: 500, sy: 0, sw: 100, sh: 100, anim: 0},
+                6: {id: 6, images: 0, sx: 600, sy: 0, sw: 100, sh: 100, anim: 0},
+                '0b': {id: 100, images: 0, sx: 0, sy: 100, sw: 100, sh: 100, anim: 0},
+                '1b': {id: 101, images: 0, sx: 100, sy: 100, sw: 100, sh: 100, anim: 0},
+                '2b': {id: 102, images: 0, sx: 200, sy: 100, sw: 100, sh: 100, anim: 0}
+            },
 
             props: [
                 {name: "Tent", score: 0, numSprite: 0, probability: 0.8},
