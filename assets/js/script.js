@@ -40,15 +40,18 @@
                 'sol.png'
             ],
 
-            sprites: [
-                {id: 0, images: 0, sx: 0, sy: 0, sw: 100, sh: 100, anim: 0},
-                {id: 1, images: 0, sx: 100, sy: 0, sw: 100, sh: 100, anim: 0},
-                {id: 2, images: 0, sx: 200, sy: 0, sw: 100, sh: 100, anim: 0},
-                {id: 3, images: 0, sx: 300, sy: 0, sw: 100, sh: 100, anim: 0},
-                {id: 4, images: 0, sx: 400, sy: 0, sw: 100, sh: 100, anim: 0},
-                {id: 5, images: 0, sx: 500, sy: 0, sw: 100, sh: 100, anim: 0},
-                {id: 6, images: 0, sx: 600, sy: 0, sw: 100, sh: 100, anim: 0}
-            ],
+            sprites: {
+                0: {id: 0, images: 0, sx: 0, sy: 0, sw: 100, sh: 100, anim: 0},
+                1: {id: 1, images: 0, sx: 100, sy: 0, sw: 100, sh: 100, anim: 0},
+                2: {id: 2, images: 0, sx: 200, sy: 0, sw: 100, sh: 100, anim: 0},
+                3: {id: 3, images: 0, sx: 300, sy: 0, sw: 100, sh: 100, anim: 0},
+                4: {id: 4, images: 0, sx: 400, sy: 0, sw: 100, sh: 100, anim: 0},
+                5: {id: 5, images: 0, sx: 500, sy: 0, sw: 100, sh: 100, anim: 0},
+                6: {id: 6, images: 0, sx: 600, sy: 0, sw: 100, sh: 100, anim: 0},
+                '0b': {id: 100, images: 0, sx: 0, sy: 100, sw: 100, sh: 100, anim: 0},
+                '1b': {id: 101, images: 0, sx: 100, sy: 100, sw: 100, sh: 100, anim: 0},
+                '2b': {id: 102, images: 0, sx: 200, sy: 100, sw: 100, sh: 100, anim: 0}
+            },
 
             props: [
                 {name: "Tent", score: 5, numSprite: 0, probability: 0.8},
@@ -104,6 +107,10 @@
             },
 
             launch: function () {
+                //anim init
+                gb.client.anim = 0;
+                gb.client.way = 1;
+
                 //draw map
                 ut.game.drawMap();
                 ut.game.proposedObject();
@@ -161,7 +168,7 @@
 
             //Core function
             loop: function () {
-                var i, oneCase, client, sprite, numSprite, image, anim;
+                var i, oneCase, client, sprite, numSprite, image, anim, way, center;
 
                 gb.context.clearRect(0, 0, gb.gridX * gb.square, gb.gridY * gb.square);
                 //set sol
@@ -187,17 +194,17 @@
                     if (!gb.cases[client.square].texture.sw) {
 
                         numSprite = gb.item.numSprite;
-                        sprite = gb.sprites[numSprite];
-                        anim = gb.cases[client.square].texture.anim;
+                        sprite = gb.sprites[numSprite + 'b'];
+                        way = gb.client.anim > 1 || gb.client.anim < 0.9 ? gb.client.way * -1 : gb.client.way;
+                        anim = gb.client.anim > 1 || gb.client.anim < 0.9 ? way < 0 ? 0.9 : 1 : gb.client.anim;
 
-                        anim = anim === 1 ? 0 : anim + 0.05;
-                        gb.cases[client.square].texture.anim = anim;
-
+                        gb.client.anim = anim  - (way * 0.002);
+                        gb.client.way = way;
                         image = gb.images[sprite.images];
+                        center = (gb.square - (gb.square * anim)) / 2;
 
-                        gb.context.scale(anim, anim);
-                        gb.context.drawImage(image, sprite.sx, sprite.sy,
-                            sprite.sw, sprite.sh, gb.cases[client.square].x, gb.cases[client.square].y, gb.square, gb.square);
+                        gb.context.drawImage(image, sprite.sx, sprite.sy, sprite.sw, sprite.sh,
+                            gb.cases[client.square].x + center, gb.cases[client.square].y + center, gb.square * anim, gb.square * anim);
                     }
                 }
 
@@ -208,11 +215,11 @@
                 var proposed, random, item;
                 proposed = gb.props.slice(0, 3);
                 random = Math.random();
-                if (random < 0.8) {
+                if (random < 0.95) {
                     item = proposed[0];
-                } else if (random > 0.8 && random < 0.95) {
+                } else if (random > 0.95 && random < 0.98) {
                     item = proposed[1];
-                } else if (random > 0.95 && random <= 1) {
+                } else if (random > 0.98 && random <= 1) {
                     item = proposed[2];
                 }
                 gb.item = item;
@@ -275,7 +282,7 @@
                         }
                     }
                 }
-                if (direction[1] && elem.no !== 47) {//right
+                if (direction[1] && elem.no !== 48) {//right
 
                     c2 = gb.cases[elem.no + 1];
                     if (c2 && c2.no % gb.gridX !== 0 && direction[1]
@@ -358,10 +365,8 @@
             
 
             hover: function (event) {
-                gb.client = {
-                    x: event.pageX - gb.bounding.left,
-                    y: event.pageY - gb.bounding.top
-                };
+                gb.client.x = event.pageX - gb.bounding.left;
+                gb.client.y = event.pageY - gb.bounding.top;
             },
 
             click: function (event) {
