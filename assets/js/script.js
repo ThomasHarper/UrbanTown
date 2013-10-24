@@ -346,8 +346,6 @@
                 i = spriteId.length - 1;
                 if (spriteId != []) {
                     for (i; i >= 0; i--) {
-                        //console.log(spriteId[i]);
-                        //console.log(i);
                         scoreTab.push(gb.props[spriteId[i]].score);
                     };
                 };
@@ -362,7 +360,30 @@
                 $('.info-score').html(gb.score);
             },
 
-            
+            getLevel: function () {
+                var levels = ["Camper", "Inhabitant", "Mayor", "President", "God"];
+
+                if (gb.score >= 0 && gb.score <= 500) {
+                    $('.inprogress').css('width', '20' + '%');
+                    //@TODO .html nom du palier
+                }
+                else if (gb.score > 500 && gb.score <= 1500) {
+                    $('.inprogress').css('width', '40' + '%');
+                    //@TODO .html nom du palier
+                }
+                else if (gb.score > 1500 && gb.score <= 3000) {
+                    $('.inprogress').css('width', '60' + '%');
+                    //@TODO .html nom du palier
+                }
+                else if (gb.score > 3000 && gb.score < 30000) {
+                    $('.inprogress').css('width', '80' + '%');
+                    //@TODO .html nom du palier
+                }
+                else if (gb.score >= 30000) {
+                    $('.inprogress').css('width', '100' + '%');
+                    //@TODO .html nom du palier
+                }
+            },
 
             hover: function (event) {
                 gb.client.x = event.pageX - gb.bounding.left;
