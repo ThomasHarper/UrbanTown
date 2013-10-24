@@ -106,6 +106,10 @@
             },
 
             launch: function () {
+                //anim init
+                gb.client.anim = 0;
+                gb.client.way = 1;
+
                 //draw map
                 ut.game.drawMap();
                 ut.game.proposedObject();
@@ -162,7 +166,7 @@
 
             //Core function
             loop: function () {
-                var i, oneCase, client, sprite, numSprite, image, anim;
+                var i, oneCase, client, sprite, numSprite, image, anim, way, center;
 
                 gb.context.clearRect(0, 0, gb.gridX * gb.square, gb.gridY * gb.square);
                 //set sol
@@ -188,17 +192,17 @@
                     if (!gb.cases[client.square].texture.sw) {
 
                         numSprite = gb.item.numSprite;
-                        sprite = gb.sprites[numSprite];
-                        anim = gb.cases[client.square].texture.anim;
+                        sprite = gb.sprites[numSprite + 'b'];
+                        way = gb.client.anim > 1 || gb.client.anim < 0.9 ? gb.client.way * -1 : gb.client.way;
+                        anim = gb.client.anim > 1 || gb.client.anim < 0.9 ? way < 0 ? 0.9 : 1 : gb.client.anim;
 
-                        anim = anim === 1 ? 0 : anim + 0.05;
-                        gb.cases[client.square].texture.anim = anim;
-
+                        gb.client.anim = anim  - (way * 0.002);
+                        gb.client.way = way;
                         image = gb.images[sprite.images];
+                        center = (gb.square - (gb.square * anim)) / 2;
 
-                        gb.context.scale(anim, anim);
-                        gb.context.drawImage(image, sprite.sx, sprite.sy,
-                            sprite.sw, sprite.sh, gb.cases[client.square].x, gb.cases[client.square].y, gb.square, gb.square);
+                        gb.context.drawImage(image, sprite.sx, sprite.sy, sprite.sw, sprite.sh,
+                            gb.cases[client.square].x + center, gb.cases[client.square].y + center, gb.square * anim, gb.square * anim);
                     }
                 }
 
