@@ -24,7 +24,7 @@
 					$id = myLastInsertId();
 					$_SESSION['login'] = $login;
 					$_SESSION['id'] = $id;
-
+					$smarty->assign('login', $login);
 					$tpl = "game";
 
 				}
@@ -66,7 +66,8 @@
 			}
 			if (sha1($password_secured) === $attrs[1]) {
 				$_SESSION['id'] = $attrs[0];
-				$_SESSION['login'] = $login;				
+				$_SESSION['login'] = $login;	
+				$smarty->assign('login', $login);			
 				$tpl = "game";
 			}
 			else
@@ -102,7 +103,7 @@
 			echo "update";
 			$query = 'UPDATE `games` SET `state` = "'.addslashes($data).'", `score` = '.$score.', `over` = '.$over.' 
 			WHERE `players_id` = '.$_SESSION['id'].' AND `over` = 0';
-			myQuery($query);
+			myQuery($query);			
 		}
 			
 	}
