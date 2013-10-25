@@ -303,19 +303,20 @@
                     }
                 }
 
-                //if cursor is in map
+                //Handle hover effect
                 client = ut.game.inCanvas(gb.client.x, gb.client.y);
                 if (client) {
 
-                    if (!gb.cases[client.square].texture.sw) {
+                    if (!gb.cases[client.square].texture.sw || gb.item.name === 'Hammer') {
 
                         numSprite = gb.item.numSprite;
-                        sprite = gb.sprites[numSprite + 'b'];
-                        way = gb.client.anim > 1 || gb.client.anim <0.9 ? gb.client.way * -1 : gb.client.way;
+                        sprite = gb.sprites[numSprite + 'b'] || gb.sprites[numSprite];
+                        way = gb.client.anim > 1 || gb.client.anim < 0.9 ? gb.client.way * -1 : gb.client.way;
                         anim = gb.client.anim > 1 || gb.client.anim < 0.9 ? way < 0 ? 0.9 : 1 : gb.client.anim;
 
                         gb.client.anim = anim  - (way * 0.002);
                         gb.client.way = way;
+
                         image = gb.images[sprite.images];
                         center = (gb.square - (gb.square * anim)) / 2;
                         client = gb.cases[client.square];
@@ -339,26 +340,50 @@
                 } else if (random > 0.98 && random <= 1) {
                     item = proposed[2];
                 }
+
+                $('.drop-item').find('span:first').removeAttr('class')
+                    .addClass(item.name.toLowerCase().replace(/\s/g, ""));
+
                 gb.item = item;
             },
 
             drop: function (client) {
-                var numSprite, sprite, oneCase, elem;
+                var numSprite, sprite, oneCase, elem, change;
 
                 numSprite = gb.item.numSprite;
                 sprite = gb.sprites[numSprite];
 
                 oneCase = gb.cases[client.square];
+
+                //normal
                 if (!oneCase.texture.sw) {
                     gb.cases[client.square].texture = sprite;
                     elem = gb.cases[client.square];
                     ut.game.proposedObject();
 
                     ut.game.kamehameha(client.square, elem);
+                    change = true;
+                }
+
+                //Hammer
+                if (oneCase.texture.sw && gb.item.name === 'Hammer') {
+
+                    //Godzilla case
+                    if (oneCase.texture.id === 12) {
+                        gb.cases[client.square].texture = gb.sprites[7];
+                    } else {
+                        gb.cases[client.square].texture = '';
+                    }
+
+                    ut.game.proposedObject();
+                    change = true;
+                }
+
+                if (change) {
                     ut.game.getScore();
                     ut.game.getLevel();
-                    
                 }
+
             },
 
             //THE EPICEST FUNCTIONS EVER
@@ -455,27 +480,27 @@
             },
 
             getScore: function () {
-                var state, spriteId = [], scoreTab = [], provisoryScore = 0,i;
+                var state, spriteId = [], scoreTab = [], provisoryScore = 0, i;
                 state = gb.cases;
                 i = state.length - 1;
                 for (i; i >= 0; i--) {
-                    if (state[i].texture.sw) {                        
-                        spriteId.push(state[i].texture.id);                
-                    };
-                };
+                    if (state[i].texture.sw) {
+                        spriteId.push(state[i].texture.id);
+                    }
+                }
 
                 i = spriteId.length - 1;
-                if (spriteId != []) {
+                if (Object.prototype.toString.call(spriteId) !== '[object Array]') {
                     for (i; i >= 0; i--) {
                         scoreTab.push(gb.props[spriteId[i]].score);
-                    };
-                };
-                
+                    }
+                }
+
                 i = scoreTab.length - 1;
-                if(scoreTab != []) {
+                if (Object.prototype.toString.call(spriteId) !== '[object Array]') {
                     for (i; i >= 0; i--) {
-                        provisoryScore += scoreTab[i]; 
-                    };
+                        provisoryScore += scoreTab[i];
+                    }
                 }
                 gb.score = provisoryScore;
                 $('.info-score').html(gb.score);
@@ -488,23 +513,19 @@
                     $('.inprogress').css('width', '20' + '%');
                     $('.level').html(levels[0]);
                     //@TODO .html nom du palier
-                }
-                else if (gb.score > 500 && gb.score <= 1500) {
+                } else if (gb.score > 500 && gb.score <= 1500) {
                     $('.inprogress').css('width', '40' + '%');
                     $('.level').html(levels[1]);
                     //@TODO .html nom du palier
-                }
-                else if (gb.score > 1500 && gb.score <= 3000) {
+                } else if (gb.score > 1500 && gb.score <= 3000) {
                     $('.inprogress').css('width', '60' + '%');
                     $('.level').html(levels[2]);
                     //@TODO .html nom du palier
-                }
-                else if (gb.score > 3000 && gb.score < 30000) {
+                } else if (gb.score > 3000 && gb.score < 30000) {
                     $('.inprogress').css('width', '80' + '%');
                     $('.level').html(levels[3]);
                     //@TODO .html nom du palier
-                }
-                else if (gb.score >= 30000) {
+                } else if (gb.score >= 30000) {
                     $('.inprogress').css('width', '100' + '%');
                     $('.level').html(levels[4]);
                     //@TODO .html nom du palier
