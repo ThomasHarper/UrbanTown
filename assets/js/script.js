@@ -132,9 +132,9 @@
 
                 gb.$canvas.show();
 
-                $('.save-game').click(function (){
+                $('.save-game').click(function () {
                     ut.request.save(gb.cases, gb.score, 0);
-                });  
+                });
 
                 gb.$canvas.css('display', 'block');
                 //Loop
@@ -305,7 +305,7 @@
                             sprite.sw, sprite.sh, oneCase.x, oneCase.y, gb.square, gb.square);
                         gb.cases[i - 1].texture = sprite;
                         filledCases++;
-                    }                    
+                    }
                 }
 
                 //Handle hover effect
@@ -341,7 +341,6 @@
                 } else {
                     requestAnimationFrame(ut.game.loop);
                 }
-                
             },
 
             proposedObject: function () {
@@ -507,18 +506,18 @@
                 }
 
                 i = spriteId.length - 1;
-                if (spriteId.length != 0) {
-                    for (i; i >= 0; i--) {                        
+                if (spriteId.length !== 0) {
+                    for (i; i >= 0; i--) {
                         scoreTab.push(gb.props[spriteId[i]].score);
                     }
                 }
 
                 i = scoreTab.length - 1;
-                if (spriteId.length != 0) {
+                if (spriteId.length !== 0) {
                     for (i; i >= 0; i--) {
                         provisoryScore += scoreTab[i];
                     }
-                }               
+                }
                 gb.score = provisoryScore;
                 $('.info-score').html(gb.score);
             },
@@ -528,23 +527,19 @@
 
                 if (gb.score >= 0 && gb.score <= 500) {
                     $('.inprogress').css('width', '20' + '%');
-                    $('.level').html(levels[0]);                
-                }
-                else if (gb.score > 500 && gb.score <= 1500) {
+                    $('.level').html(levels[0]);
+                } else if (gb.score > 500 && gb.score <= 1500) {
                     $('.inprogress').css('width', '40' + '%');
-                    $('.level').html(levels[1]);                    
-                }
-                else if (gb.score > 1500 && gb.score <= 3000) {
+                    $('.level').html(levels[1]);
+                } else if (gb.score > 1500 && gb.score <= 3000) {
                     $('.inprogress').css('width', '60' + '%');
-                    $('.level').html(levels[2]);                
-                }
-                else if (gb.score > 3000 && gb.score < 30000) {
+                    $('.level').html(levels[2]);
+                } else if (gb.score > 3000 && gb.score < 30000) {
                     $('.inprogress').css('width', '80' + '%');
-                    $('.level').html(levels[3]);                    
-                }
-                else if (gb.score >= 30000) {
+                    $('.level').html(levels[3]);
+                } else if (gb.score >= 30000) {
                     $('.inprogress').css('width', '100' + '%');
-                    $('.level').html(levels[4]);                    
+                    $('.level').html(levels[4]);
                 }
             },
 
@@ -635,7 +630,7 @@
 
 
         ut.request = {
-            save: function (data, score, over) {                
+            save: function (data, score, over) {
                 $.ajax({
                     url: 'index.php?action=save',
                     type: "POST",
