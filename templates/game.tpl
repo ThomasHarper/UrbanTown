@@ -18,7 +18,7 @@
 	</div>
 
 	<div class="buttons">
-		<h3>Menu du jeu</h3>
+		<h3>Game menu</h3>
 
 		<span class="save-game"></span>
 		<span class="new-game"></span>
