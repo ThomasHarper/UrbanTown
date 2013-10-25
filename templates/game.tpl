@@ -17,7 +17,6 @@
 		</div>
 	</div>
 
-    <!-- Objet (COUCOU JEREMY): -->
     <div class="drop-item">
         <span id="props" class="img"></span>
         <span class="current">Current item</span>
