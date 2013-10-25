@@ -112,9 +112,7 @@
                 gb.$canvas.mousemove(ut.game.hover);
                 gb.$canvas.click(ut.game.click);
 
-                $('.info-score').html(0);                
-                
-
+                $('.info-score').html(0);
             },
 
             launch: function () {
@@ -127,8 +125,7 @@
                 ut.game.proposedObject();
 
                 //Score and Level
-                ut.game.getScore();                            
-
+                ut.game.getScore();
 
                 gb.$canvas.show();
                 $('.save-game').click(function () {
