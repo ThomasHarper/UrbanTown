@@ -76,7 +76,8 @@
                 {name: "Palace", score: 5000, numSprite: 5, probability: 0},
                 {name: "Apartment", score: 20000, numSprite: 6, probability: 0},
                 {name: "Building", score: 100000, numSprite: 7, probability: 0},
-                {name: "Golden building", score: 500000, numSprite: 8, probability: 0}
+                {name: "Golden building", score: 500000, numSprite: 8, probability: 0},
+                {name: "Hammer", score: 0, numSprite: 10, probability: 0}
             ]
         };
 
