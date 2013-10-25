@@ -27,7 +27,7 @@
 		<h3>Game menu</h3>
 
 		<span class="save-game"></span>
-		<span class="new-game"></span>
+		<!-- <span class="new-game"></span> -->
 		<span class="quit-game"></span>
 	</div>
 </aside>
