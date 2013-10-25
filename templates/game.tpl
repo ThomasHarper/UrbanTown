@@ -1,4 +1,4 @@
-<canvas id="game" width="700" height="700"></canvas>
+<canvas id="game" width="950" height="700"></canvas>
 
 <aside>
 	<div class="nom">
@@ -17,8 +17,14 @@
 		</div>
 	</div>
 
+    Objet (COUCOU JEREMY):
+    <p class="drop-item">
+        <span class="img"></span>
+        <span>Placer l'item</span>
+    </p>
+
 	<div class="buttons">
-		<h3>Menu du jeu</h3>
+		<h3>Game menu</h3>
 
 		<span class="save-game"></span>
 		<span class="new-game"></span>
