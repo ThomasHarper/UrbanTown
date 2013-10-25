@@ -285,11 +285,11 @@
                 gb.context.drawImage(gb.images[1], 0, 0, 700, 700, 0, 0, 700, 700);
 
                 //set Boat
-                way = gb.boat.anim > 3 || gb.boat.anim < -3 ? gb.boat.way * -1 : gb.boat.way;
-                anim = gb.boat.anim > 3 || gb.boat.anim < -3 ? -3 : gb.boat.anim;
+                way = gb.boat.anim > 4 || gb.boat.anim < -4 ? gb.boat.way * -1 : gb.boat.way;
+                anim = gb.boat.anim > 4 || gb.boat.anim < -4 ? -4 : gb.boat.anim;
 
-                gb.context.drawImage(gb.images[3], 790 + (way * (anim + 0.02)), 230);
-                gb.boat.anim = anim + 0.02;
+                gb.context.drawImage(gb.images[3], 790 + (way * (anim + 0.05)), 230 + (way * (anim + 0.05)));
+                gb.boat.anim = anim + 0.05;
                 gb.boat.way = way;
                 way = -1 * way;
                 gb.context.drawImage(gb.images[2], 800, 250);
