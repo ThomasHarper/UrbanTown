@@ -17,11 +17,11 @@
 		</div>
 	</div>
 
-    Objet (COUCOU JEREMY):
-    <p class="drop-item">
-        <span class="img"></span>
-        <span>Placer l'item</span>
-    </p>
+    <!-- Objet (COUCOU JEREMY): -->
+    <div class="drop-item">
+        <span id="props" class="img"></span>
+        <span class="current">Current item</span>
+    </div>
 
 	<div class="buttons">
 		<h3>Game menu</h3>
