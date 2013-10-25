@@ -281,14 +281,14 @@
                 gb.context.drawImage(gb.images[1], 0, 0, 700, 700, 0, 0, 700, 700);
 
                 //set Boat
-                way = gb.boat.anim > 1 || gb.boat.anim < -1 ? gb.boat.way * -1 : gb.boat.way;
-                anim = gb.boat.anim > 1 || gb.boat.anim < -1 ? -1 : gb.boat.anim;
+                way = gb.boat.anim > 3 || gb.boat.anim < -3 ? gb.boat.way * -1 : gb.boat.way;
+                anim = gb.boat.anim > 3 || gb.boat.anim < -3 ? -3 : gb.boat.anim;
 
                 gb.context.drawImage(gb.images[3], 790 + (way * (anim + 0.02)), 230);
                 gb.boat.anim = anim + 0.02;
                 gb.boat.way = way;
                 way = -1 * way;
-                gb.context.drawImage(gb.images[2], 800 + (way * (anim + 0.02)), 250);
+                gb.context.drawImage(gb.images[2], 800, 250);
 
                 //ReDraw texture
                 for (i = gb.gridX * gb.gridY; i > 0; i--) {
