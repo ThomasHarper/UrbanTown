@@ -330,7 +330,6 @@
                     }
                 }
                 if (filledCases === gb.gridX * gb.gridY) {
-                    $.ajax
                     if (confirm('Game Over ! Would you like to start a new one ?')) {
                         ut.request.save(gb.cases, gb.score, 1);
                         //@TODO , NEW LOAD NEEDED
