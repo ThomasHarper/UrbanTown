@@ -58,26 +58,15 @@ table {
   font-style: normal; }
 
 body {
-  font-family: "MuseoSans-500", arial, sans-serif; }
+  font-family: "MuseoSans-500", arial, sans-serif;
+  background: url("../images/floor.png") no-repeat center center #5cbecf; }
 
 *:focus {
   outline: 0; }
 
-#fps {
-  position: fixed;
-  top: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 10px;
-  color: #fff;
-  font-size: 40px; }
-
 canvas {
-  width: 1000px;
   display: none;
-  height: 740px;
-  border: 1px solid #000;
-  margin: auto; }
+  position: absolute; }
 
 .homepage {
   background-color: #e4dcc6; }
@@ -163,14 +152,29 @@ aside {
     line-height: 70px;
     color: #db7743; }
   aside .score {
-    text-align: center;
     margin: 40px 0; }
-    aside .score .info-titre {
-      text-transform: uppercase;
+    aside .score .global-detail:before, aside .score .global-detail:after {
+      content: " ";
+      /* 1 */
+      display: table;
+      /* 2 */ }
+    aside .score .global-detail:after {
+      clear: both; }
+    aside .score .global-detail .info-score-group {
+      float: left; }
+      aside .score .global-detail .info-score-group .info-titre {
+        margin-left: 16px;
+        text-transform: uppercase;
+        color: #beb8a7; }
+      aside .score .global-detail .info-score-group .info-score {
+        color: #989486;
+        font-size: 20px; }
+    aside .score .global-detail .level {
+      float: right;
+      text-align: right;
+      margin-top: 3px;
+      margin-right: 16px;
       color: #beb8a7; }
-    aside .score .info-score {
-      color: #989486;
-      font-size: 20px; }
     aside .score .progress {
       width: 86%;
       height: 6px;
@@ -205,7 +209,8 @@ aside {
       margin: 0 auto 25px;
       display: block;
       width: 135px;
-      height: 125px; }
+      height: 125px;
+      cursor: pointer; }
       aside .buttons .save-game:hover {
         background-position: 0 -125px; }
     aside .buttons .new-game {
@@ -214,7 +219,8 @@ aside {
       margin: 0 auto 25px;
       display: block;
       width: 135px;
-      height: 125px; }
+      height: 125px;
+      cursor: pointer; }
       aside .buttons .new-game:hover {
         background-position: -135px -125px; }
     aside .buttons .quit-game {
@@ -223,6 +229,7 @@ aside {
       background-position: -270px 0;
       display: block;
       width: 135px;
-      height: 125px; }
+      height: 125px;
+      cursor: pointer; }
       aside .buttons .quit-game:hover {
         background-position: -270px -125px; }
