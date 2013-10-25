@@ -2,7 +2,7 @@
 
 <aside>
 	<div class="nom">
-		<h2>Goldorak</h2>
+		<h2>{$login}</h2>
 	</div>
 
 	<div class="score">
