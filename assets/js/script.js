@@ -576,6 +576,13 @@
 
                     toReturn = {col: col, row: row, square: square};
                     gb.$canvas.css('cursor', 'pointer');
+                } else if (x > 810 && x < 910 && y > 400 && y < 500) {
+                    col = Math.ceil((x - gb.marginLeft) / gb.square);
+                    row = Math.ceil((y - gb.marginTop) / gb.square);
+                    square = col + (row - 1)  * 7 - 1;
+
+                    toReturn = {col: col, row: row, square: square};
+                    gb.$canvas.css('cursor', 'pointer');
                 }
 
                 return toReturn;
