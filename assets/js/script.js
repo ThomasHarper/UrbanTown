@@ -34,6 +34,7 @@
             player: {},
             score: 0,
             boat: {},
+            drop: {},
 
             // Sprites
             images : [
