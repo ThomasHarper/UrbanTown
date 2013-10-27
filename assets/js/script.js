@@ -122,6 +122,9 @@
 
             launch: function () {
                 //anim init
+                gb.client.x = 0;
+                gb.client.y = 0;
+                gb.client.square = 0;
                 gb.client.anim = 0;
                 gb.client.way = 1;
 
