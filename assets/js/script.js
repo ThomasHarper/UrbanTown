@@ -293,7 +293,7 @@
 
             //Core function
             loop: function () {
-                var i, oneCase, client, sprite, numSprite, image, anim, way, center, filledCases = 0;
+                var i, oneCase, client, sprite, numSprite, image, anim, way, center, filledCases = 0, clientSquare;
 
                 gb.context.clearRect(0, 0, gb.gridX * gb.square + 250, gb.gridY * gb.square);
                 //set sol
@@ -323,11 +323,20 @@
                     }
                 }
 
+                //Redraw BoatDrop
+                if (gb.drop.item) {
+                    sprite = gb.sprites[gb.drop.item.numSprite];
+
+                    gb.context.drawImage(gb.images[sprite.images], sprite.sx, sprite.sy,
+                        sprite.sw, sprite.sh, 810, 400, gb.square, gb.square);
+                }
+
                 //Handle hover effect
                 client = ut.game.inCanvas(gb.client.x, gb.client.y);
                 if (client) {
 
-                    if (!gb.cases[client.square].texture.sw || gb.item.name === 'Hammer') {
+                    if (gb.item.name === 'Hammer' || client === 'boat' ||
+                            !gb.cases[client.square].texture.sw) {
 
                         numSprite = gb.item.numSprite;
                         sprite = gb.sprites[numSprite + 'b'] || gb.sprites[numSprite];
@@ -339,16 +348,25 @@
 
                         image = gb.images[sprite.images];
                         center = (gb.square - (gb.square * anim)) / 2;
-                        client = gb.cases[client.square];
-                        gb.context.drawImage(image, sprite.sx, sprite.sy, sprite.sw, sprite.sh,
-                            client.x + center, client.y + center, gb.square * anim, gb.square * anim);
+                        clientSquare = gb.cases[client.square];
+
+                        if (client === 'boat') {
+                            if (!gb.drop.item) {
+                                gb.context.drawImage(image, sprite.sx, sprite.sy, sprite.sw, sprite.sh,
+                                    810 + center, 400 + center, gb.square * anim, gb.square * anim);
+                            }
+                        } else {
+                            gb.context.drawImage(image, sprite.sx, sprite.sy, sprite.sw, sprite.sh,
+                                clientSquare.x + center, clientSquare.y + center, gb.square * anim, gb.square * anim);
+                        }
                     }
                 }
+
                 if (filledCases === gb.gridX * gb.gridY) {
+
                     if (confirm('Game Over ! Would you like to start a new one ?')) {
                         ut.request.save(gb.cases, gb.score, 1);
                         //@TODO , NEW LOAD NEEDED
-
                     } else {
                         ut.request.save(gb.cases, gb.score, 1);
                     }
@@ -409,7 +427,6 @@
                 }
 
                 if (change) {
-                    console.log();
                     ut.game.getScore();
                     ut.game.getLevel();
                 }
@@ -564,7 +581,7 @@
             },
 
             click: function (event) {
-                var posX, posY, client;
+                var posX, posY, client, item;
 
                 posX = event.pageX - gb.bounding.left;
                 posY = event.pageY - gb.bounding.top;
