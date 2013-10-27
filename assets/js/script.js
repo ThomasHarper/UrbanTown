@@ -377,21 +377,23 @@
 
             proposedObject: function () {
                 var proposed, random, item;
-                proposed = gb.props.slice(0, 3);
+                proposed = gb.props;
                 random = Math.random();
 
-                if (random < 0.95) {
+                if (random < 0.80) {
                     item = proposed[0];
-                } else if (random > 0.95 && random < 0.98) {
+                } else if (random > 0.80 && random < 0.90) {
                     item = proposed[1];
-                } else if (random > 0.98 && random <= 1) {
+                } else if (random > 0.90 && random <= 0.95) {
                     item = proposed[2];
+                } else if (random > 0.95 && random <= 1) {
+                    item = proposed[10];
                 }
+
+                gb.item = item;
 
                 $('.drop-item').find('span:first').removeAttr('class')
                     .addClass(item.name.toLowerCase().replace(/\s/g, ""));
-
-                gb.item = item;
             },
 
             drop: function (client) {
@@ -403,18 +405,14 @@
                 oneCase = gb.cases[client.square];
 
                 //normal
-                if (!oneCase.texture.sw) {
+                if (!oneCase.texture.sw && gb.item.name !== 'Hammer') {
                     gb.cases[client.square].texture = sprite;
                     elem = gb.cases[client.square];
                     ut.game.proposedObject();
 
                     ut.game.kamehameha(client.square, elem);
                     change = true;
-                }
-
-                //Hammer
-                if (oneCase.texture.sw && gb.item.name === 'Hammer') {
-
+                } else if (oneCase.texture.sw && gb.item.name === 'Hammer') {//Hammer
                     //Godzilla case
                     if (oneCase.texture.id === 12) {
                         gb.cases[client.square].texture = gb.sprites[7];
