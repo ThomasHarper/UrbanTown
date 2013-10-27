@@ -135,6 +135,9 @@
                 gb.lastPos.row = 1;
                 gb.lastPos.square = 0;
 
+
+                //@TODO: not over game exist ? load it, else drawMap()
+
                 //draw map
                 ut.game.drawMap();
                 ut.game.proposedObject();
@@ -148,7 +151,11 @@
                 gb.$canvas.show();
 
                 $('.save-game').click(function () {
+                    //@TODO: save game
                     ut.request.save(gb.cases, gb.score, 0);
+                });
+                $('.quit-game').click(function () {
+                    //@TODO: quit game function (save current as over + new game)
                 });
 
                 gb.$canvas.css('display', 'block');
