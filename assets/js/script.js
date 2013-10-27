@@ -139,6 +139,9 @@
                 ut.game.drawMap();
                 ut.game.proposedObject();
 
+                //Init drop cases
+                gb.cases.push({no: 999, texture: '', x: 800, y: 900});
+
                 //Score and Level
                 ut.game.getScore();
 
