@@ -35,6 +35,7 @@
             score: 0,
             boat: {},
             drop: {},
+            lastPos: {},
 
             // Sprites
             images : [
@@ -123,6 +124,13 @@
                 //anim init
                 gb.client.anim = 0;
                 gb.client.way = 1;
+
+                //position init
+                gb.client.x = 5;
+                gb.client.y = 5;
+                gb.lastPos.col = 1;
+                gb.lastPos.row = 1;
+                gb.lastPos.square = 0;
 
                 //draw map
                 ut.game.drawMap();
@@ -558,14 +566,29 @@
                 client = ut.game.inCanvas(posX, posY);
 
                 if (client) {
-                    ut.game.drop(client);
+                    if (client === 'boat') {
+                        if (gb.drop.item) {
+                            item = gb.drop.item;
+                            gb.drop.item = gb.item;
+                            gb.item = item;
+                        } else {
+                            gb.drop.item = gb.item;
+                            ut.game.proposedObject();
+                        }
+
+                        $('.drop-item').find('span:first').removeAttr('class')
+                            .addClass(gb.item.name.toLowerCase().replace(/\s/g, ""));
+                    } else {
+                        ut.game.drop(client);
+                    }
                 }
             },
 
             inCanvas: function (x, y) {
                 var col, row, square, toReturn;
 
-                toReturn = false;
+                toReturn = gb.lastPos;
+
                 gb.$canvas.css('cursor', 'default');
 
                 if ((x > gb.marginLeft && x < (gb.square * gb.gridX + gb.marginLeft))
@@ -582,6 +605,7 @@
                     gb.$canvas.css('cursor', 'pointer');
                 }
 
+                gb.lastPos = toReturn;
                 return toReturn;
             },
 
