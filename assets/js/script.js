@@ -425,10 +425,45 @@
                 }
 
                 if (change) {
-                    ut.game.getScore();
-                    ut.game.getLevel();
+                    ut.game.action(gb.item);
                 }
 
+            },
+
+            moveDatGodzilla: function () {
+                var length, oneCase, emptyCases, emptyCasesLength, random, toIgnore = [], toIgnoreLength = 0,
+                    isIn, i = 0;
+                length = gb.gridX * gb.gridY;
+
+                isIn = false;
+
+                for (length; length > 0; length--) {
+                    oneCase = gb.cases[length - 1];
+                    if (oneCase.texture && oneCase.texture.id === 12) {
+
+                        emptyCases = ut.game.findNext(oneCase, [true, true, true, true], 0, 'empty');
+                        emptyCasesLength = emptyCases.length;
+
+                        if (toIgnoreLength > 0) {
+                            i = toIgnoreLength;
+
+                            for (i; i > 0; i--) {
+                                isIn = isIn === false && oneCase.no === toIgnore[i - 1] ? true : false;
+                            }
+                            i = 0;
+                        }
+
+                        if (emptyCasesLength > 0 && isIn === false) {
+                            random = Math.floor(Math.random() * emptyCasesLength);
+                            gb.cases[emptyCases[random]].texture = oneCase.texture;
+                            gb.cases[oneCase.no].texture = '';
+                            toIgnore.push(emptyCases[random]);
+                            toIgnoreLength++;
+                        }
+
+                        isIn = false;
+                    }
+                }
             },
 
             //THE EPICEST FUNCTIONS EVER
@@ -455,69 +490,88 @@
                 }
             },
 
-            findNext: function (elem, direction, level) {
+            findNext: function (elem, direction, level, type) {
                 var c1, c2, c3, c4, handle = [];
+                type = type || 'same';
 
                 if (direction[0]) {//top
 
                     c1 = gb.cases[elem.no - gb.gridX];
-                    if (direction[0] && c1 && c1.texture.id === elem.texture.id) {
+                    c1 = c1 && c1.no === 999 ? false : gb.cases[elem.no - gb.gridX];
+
+                    if (type === 'same' && direction[0] && c1 && c1.texture.id === elem.texture.id) {
                         switch (level) {
                         case 0:
                             handle.push(c1.no);
-                            handle = handle.concat(ut.game.findNext(c1, [true, true, false, true], 1));
+                            handle = handle.concat(ut.game.findNext(c1, [true, true, false, true], 1, type));
                             break;
                         case 1:
                             handle.push(c1.no);
                             break;
                         }
+                    } else if (type === 'empty' && direction[0] && c1 && !c1.texture.sw) {
+                        handle.push(c1.no);
                     }
+
                 }
                 if (direction[1] && elem.no !== 48) {//right
 
                     c2 = gb.cases[elem.no + 1];
-                    if (c2 && c2.no % gb.gridX !== 0 && direction[1]
+                    c2 = c2 && c2.no === 999 ? false : gb.cases[elem.no + 1];
+
+                    if (type === 'same' && c2 && c2.no % gb.gridX !== 0 && direction[1]
                             && c2.texture.id === elem.texture.id) {
                         switch (level) {
                         case 0:
                             handle.push(c2.no);
-                            handle = handle.concat(ut.game.findNext(c2, [true, true, true, false], 1));
+                            handle = handle.concat(ut.game.findNext(c2, [true, true, true, false], 1, type));
                             break;
                         case 1:
                             handle.push(c2.no);
                             break;
                         }
+                    } else if (type === 'empty' && direction[1] && c2 && c2.no % gb.gridX !== 0 && !c2.texture.sw) {
+                        handle.push(c2.no);
                     }
                 }
                 if (direction[2]) {//bottom
 
                     c3 = gb.cases[elem.no + gb.gridX];
-                    if (direction[2] && c3 && c3.texture.id === elem.texture.id) {
+                    c3 = c3 && c3.no === 999 ? false : gb.cases[elem.no + gb.gridX];
+                    if (type === 'same' && direction[2] && c3 && c3.texture.id === elem.texture.id) {
                         switch (level) {
                         case 0:
                             handle.push(c3.no);
-                            handle = handle.concat(ut.game.findNext(c3, [false, true, true, true], 1));
+                            handle = handle.concat(ut.game.findNext(c3, [false, true, true, true], 1, type));
                             break;
                         case 1:
                             handle.push(c3.no);
                             break;
                         }
+                    } else if (type === 'empty' && direction[2] && c3 && !c3.texture.sw) {
+                        handle.push(c3.no);
                     }
                 }
+
                 if (direction[3] && elem.no !== 0) {//left
 
                     c4 = gb.cases[elem.no - 1];
-                    if (c4 && (c4.no + 1) % gb.gridX !== 0 && direction[3]
+                    c4 = c4 && c4.no === 999 ? false : gb.cases[elem.no - 1];
+
+                    if (type === 'same' && c4 && (c4.no + 1) % gb.gridX !== 0 && direction[3]
                             && c4.texture.id === elem.texture.id) {
                         switch (level) {
                         case 0:
                             handle.push(c4.no);
-                            handle = handle.concat(ut.game.findNext(c4, [true, false, true, true], 1));
+                            handle = handle.concat(ut.game.findNext(c4, [true, false, true, true], 1, type));
                             break;
                         case 1:
                             handle.push(c4.no);
                             break;
                         }
+                    } else if (type === 'empty' && direction[3] && c4 && (c4.no + 1) % gb.gridX !== 0
+                            && !c4.texture.sw) {
+                        handle.push(c4.no);
                     }
                 }
 
@@ -596,13 +650,24 @@
                             gb.drop.item = gb.item;
                             ut.game.proposedObject();
                         }
-
-                        $('.drop-item').find('span:first').removeAttr('class')
-                            .addClass(gb.item.name.toLowerCase().replace(/\s/g, ""));
+                        ut.game.action(gb.item, true);
                     } else {
                         ut.game.drop(client);
                     }
                 }
+            },
+
+            action: function (item, notMove) {
+
+                if (!notMove) { ut.game.moveDatGodzilla(); }
+
+                //refresh menu item
+                $('.drop-item').find('span:first').removeAttr('class')
+                    .addClass(item.name.toLowerCase().replace(/\s/g, ""));
+
+                //Score & level
+                ut.game.getScore();
+                ut.game.getLevel();
             },
 
             inCanvas: function (x, y) {
