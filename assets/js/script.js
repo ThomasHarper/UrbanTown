@@ -380,13 +380,13 @@
                 proposed = gb.props;
                 random = Math.random();
 
-                if (random < 0.80) {
+                if (random < 0.86) {
                     item = proposed[0];
-                } else if (random > 0.80 && random < 0.90) {
+                } else if (random > 0.86 && random < 0.96) {
                     item = proposed[1];
-                } else if (random > 0.90 && random <= 0.95) {
+                } else if (random > 0.96 && random <= 0.97) {
                     item = proposed[2];
-                } else if (random > 0.95 && random <= 1) {
+                } else if (random > 0.97 && random <= 1) {
                     item = proposed[10];
                 }
 
