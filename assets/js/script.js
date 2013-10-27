@@ -763,21 +763,6 @@
             }
         };
 
-        ut.fps = {
-            get: function () {
-                gb.frame++;
-                var date = new Date(),
-                    thisTime = date.getTime();
-
-                gb.timeInterval = 1000 / (thisTime - gb.lastTime);
-                gb.lastTime = thisTime;
-                if (gb.frame % 10 === 0) {
-                    gb.avgFps = Math.round(gb.timeInterval * 10) / 10;
-                }
-            }
-
-        };
-
     }(ut));
 
     //-- CALL --//
