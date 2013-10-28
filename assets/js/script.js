@@ -468,6 +468,9 @@
                             gb.cases[oneCase.no].texture = '';
                             toIgnore.push(emptyCases[random]);
                             toIgnoreLength++;
+                        } else if (emptyCasesLength === 0) {
+                            gb.cases[oneCase.no].texture = gb.sprites[7];
+                            ut.game.kamehameha(oneCase.no, oneCase);
                         }
 
                         isIn = false;
