@@ -389,8 +389,10 @@
 
                 if (random < 0.86) {
                     item = proposed[0];
-                } else if (random > 0.86 && random < 0.96) {
+                } else if (random > 0.81 && random < 0.91) {
                     item = proposed[1];
+                } else if (random > 0.91 && random <= 0.96) {
+                    item = proposed[12];
                 } else if (random > 0.96 && random <= 0.97) {
                     item = proposed[2];
                 } else if (random > 0.97 && random <= 1) {
